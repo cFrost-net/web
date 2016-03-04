@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <package name="blog" namespace="/blog" extends="base-struct">
+        <action name="test" class="blogAction" method="test">
+            <result name="success">/index.jsp</result>
+        </action>
+        
+        <action name="loadBlogBody_*" class="forwardAction">
+            <result name="success">/WEB-INF/dev-resources/blogs/{1}.blog</result>
+        </action>
+    
+        <action name="loadBlog" class="forwardAction">
+            <result name="success">/WEB-INF/dev-resources/json/blogs.json</result>
+        </action>
+        
+        <action name="" class="forwardAction">
+            <result name="success">/WEB-INF/modulePages/blog/index.jsp</result>
+        </action>
+        
+        <action name="*" class="forwardAction">
+            <result name="success" type="redirect">{1}/</result>
+        </action>
+    </package>
+</struts>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <package name="root" namespace="/" extends="base-struct">
+        <action name="index" class="forwardAction">
+            <result name="success" type="redirect">/</result>
+        </action>
+        
+        <action name="" class="indexAction" method="loadProcess">
+            <result name="success">/WEB-INF/modulePages/root/index.jsp</result>
+        </action>
+        
+        <action name="*" class="forwardAction">
+            <result name="success" type="redirect">{1}/</result>
+        </action>
+    </package> 
+</struts>

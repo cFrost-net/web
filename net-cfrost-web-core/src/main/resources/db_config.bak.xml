@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-4.2.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+        destroy-method="close">
+        <!-- 指定连接数据库的驱动 -->
+        <property name="driverClass" value="${dataSource.driverClass}"/>
+        <!-- 指定连接数据库的URL -->
+        <property name="jdbcUrl" value="${dataSource.jdbcUrl}"/>
+        <!-- 指定连接数据库的用户名 -->
+        <property name="user" value="${dataSource.username}"/>
+        <!-- 指定连接数据库的密码 -->
+        <property name="password" value="${dataSource.password}"/>
+        <!-- 指定连接数据库连接池的最大连接数 -->
+        <property name="maxPoolSize" value="40"/>
+        <!-- 指定连接数据库连接池的最小连接数 -->
+        <property name="minPoolSize" value="1"/>
+        <!-- 指定连接数据库连接池的初始化连接数 -->
+        <property name="initialPoolSize" value="1"/>
+        <!-- 指定连接数据库连接池的连接的最大空闲时间 -->
+        <property name="maxIdleTime" value="20"/>
+    </bean>
+    <!-- 定义Hibernate的SessionFactory -->
+    <bean id="sessionFactory"
+        class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <!-- 依赖注入数据源，注入正是上面定义的dataSource -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- mappingResouces属性用来列出全部映射文件 -->
+        <!--<property name="mappingResources">
+            <list>
+            <!- 以下用来列出Hibernate映射文件 ->
+            <value>net/cfrost/.hbm.xml</value>
+            </list>
+        </property>    -->
+        <property name="mappingJarLocations">
+            <value>classpath:mapping.xml</value>
+        </property>
+        <!-- 定义Hibernate的SessionFactory的属性 -->
+        <property name="hibernateProperties">
+            <!-- 配置Hibernate属性 -->
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+</beans>
