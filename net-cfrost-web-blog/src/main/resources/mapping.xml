@@ -8,6 +8,5 @@
         <!-- 引入需要映射的类 -->
         <mapping class="net.cfrost.web.module.blog.domain.Blog"/>
         <mapping class="net.cfrost.web.module.blog.domain.Tag"/>
-        <mapping class="net.cfrost.web.module.blog.domain.News"/>
     </session-factory>
 </hibernate-configuration>

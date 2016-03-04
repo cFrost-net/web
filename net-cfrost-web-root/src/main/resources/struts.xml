@@ -15,5 +15,15 @@
         <action name="*" class="forwardAction">
             <result name="success" type="redirect">{1}/</result>
         </action>
+    </package>
+    
+    <package name="about" namespace="/about" extends="base-struct">        
+        <action name="" class="forwardAction">
+            <result name="success">/WEB-INF/modulePages/about/index.jsp</result>
+        </action>
+        
+        <action name="*" class="forwardAction">
+            <result name="success" type="redirect">{1}/</result>
+        </action>
     </package> 
 </struts>

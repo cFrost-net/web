@@ -1,26 +1,41 @@
-<?xml version="1.0" encoding="UTF-8"?>  
-<beans xmlns="http://www.springframework.org/schema/beans"  
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
-    xmlns:context="http://www.springframework.org/schema/context"  
-    xmlns:aop="http://www.springframework.org/schema/aop"  
-    xmlns:tx="http://www.springframework.org/schema/tx"  
-    xsi:schemaLocation="http://www.springframework.org/schema/beans  
-           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
-           http://www.springframework.org/schema/context  
-           http://www.springframework.org/schema/context/spring-context-2.5.xsd  
-           http://www.springframework.org/schema/aop  
-           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd  
-           http://www.springframework.org/schema/tx   
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/tx 
            http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
-    
+
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="fileEncoding" value="utf-8" />
         <property name="ignoreUnresolvablePlaceholders" value="true" />
-        <property name="location" value="classpath:config.properties"/>  
+        <property name="location" value="classpath:config.properties"/>
     </bean>
-    
+
     <import resource="db_config.xml"/>
 
-    <bean id="forwardAction" class="net.cfrost.web.core.action.ForwardAction">
+    <bean id="forwardAction" class="net.cfrost.web.base.action.ForwardAction">
+    </bean>
+
+    <bean id="permissionControlInterceptor" class="net.cfrost.web.security.interceptor.PermissionControlInterceptor">
+    </bean>
+
+    <bean id="log" class="net.cfrost.web.util.Log">
+        <property name="logService" ref="logService"/>
+    </bean>
+
+    <bean id="logService" class="net.cfrost.web.log.service.impl.LogService">
+        <property name="accessLogDao" ref="accessLogDao"/>
+    </bean>
+    
+    <bean id="accessLogDao" class="net.cfrost.web.log.dao.impl.AccessLogDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 </beans>

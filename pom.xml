@@ -14,8 +14,7 @@
         <module>net-cfrost-web-core</module>
         <module>net-cfrost-web-root</module>
         <module>net-cfrost-web-blog</module>
-        <module>net-cfrost-security</module>
-        <module>net-cfrost-util</module>
+        <module>net-cfrost-common</module>
     </modules>
 
     <properties>
@@ -74,6 +73,11 @@
             <dependency>
                 <groupId>org.apache.struts</groupId>
                 <artifactId>struts2-spring-plugin</artifactId>
+                <version>${struts2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.struts</groupId>
+                <artifactId>struts2-json-plugin</artifactId>
                 <version>${struts2.version}</version>
             </dependency>
 
@@ -152,6 +156,6 @@
             </plugins>
         </pluginManagement>
     </build>
-    
+
     <url>http://www.cfrost.net</url>
 </project>

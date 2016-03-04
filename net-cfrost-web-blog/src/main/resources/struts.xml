@@ -4,8 +4,18 @@
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
     <package name="blog" namespace="/blog" extends="base-struct">
-        <action name="test" class="blogAction" method="test">
-            <result name="success">/index.jsp</result>
+    	
+        <action name="blog" class="blogAction" method="newBlog">
+        	<result type="json">
+            	<param name="root">blog</param>
+            </result>
+        </action>
+        <action name="tag" class="blogAction" method="newTag">
+            <result type="json">
+                <param name="excludeNullProperties">false</param>
+                <param name="ignoreHierarchy">false</param>
+                <param name="root">tag</param>
+            </result>
         </action>
         
         <action name="loadBlogBody_*" class="forwardAction">

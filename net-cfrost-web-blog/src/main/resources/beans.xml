@@ -16,11 +16,15 @@
 
     <bean id="blogAction" class="net.cfrost.web.module.blog.action.BlogAction">
         <property name="blogService" ref="blogService"/>
-    </bean>    
+    </bean>
     <bean id="blogService" class="net.cfrost.web.module.blog.service.impl.BlogService">
         <property name="blogDao" ref="blogDao"/>
+        <property name="tagDao" ref="tagDao"/>
     </bean>
     <bean id="blogDao" class="net.cfrost.web.module.blog.dao.impl.BlogDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="tagDao" class="net.cfrost.web.module.blog.dao.impl.TagDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 </beans>
