@@ -6,6 +6,6 @@
 <hibernate-configuration>
     <session-factory>
         <!-- 引入需要映射的类 -->
-        <mapping class="net.cfrost.web.log.domain.AccessLog"/>
+        <mapping class="net.cfrost.web.core.log.domain.AccessLog"/>
     </session-factory>
 </hibernate-configuration>

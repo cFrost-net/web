@@ -2,7 +2,7 @@ package net.cfrost.web.module.root.service.impl;
 
 import java.util.List;
 
-import net.cfrost.web.base.service.impl.BaseService;
+import net.cfrost.web.core.base.service.impl.BaseService;
 import net.cfrost.web.module.root.service.IIndexService;
 import net.cfrost.web.module.root.dao.IDevProcessDao;
 import net.cfrost.web.module.root.domain.DevProcess;

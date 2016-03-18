@@ -21,21 +21,21 @@
 
     <import resource="db_config.xml"/>
 
-    <bean id="forwardAction" class="net.cfrost.web.base.action.ForwardAction">
+    <bean id="forwardAction" class="net.cfrost.web.core.base.action.ForwardAction">
     </bean>
 
-    <bean id="permissionControlInterceptor" class="net.cfrost.web.security.interceptor.PermissionControlInterceptor">
+    <bean id="permissionControlInterceptor" class="net.cfrost.web.core.security.interceptor.PermissionControlInterceptor">
     </bean>
 
-    <bean id="log" class="net.cfrost.web.util.Log">
+    <bean id="log" class="net.cfrost.web.core.util.Log">
         <property name="logService" ref="logService"/>
     </bean>
 
-    <bean id="logService" class="net.cfrost.web.log.service.impl.LogService">
+    <bean id="logService" class="net.cfrost.web.core.log.service.impl.LogService">
         <property name="accessLogDao" ref="accessLogDao"/>
     </bean>
     
-    <bean id="accessLogDao" class="net.cfrost.web.log.dao.impl.AccessLogDao">
+    <bean id="accessLogDao" class="net.cfrost.web.core.log.dao.impl.AccessLogDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 </beans>

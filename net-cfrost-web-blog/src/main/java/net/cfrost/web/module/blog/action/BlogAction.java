@@ -1,6 +1,6 @@
 package net.cfrost.web.module.blog.action;
 
-import net.cfrost.web.base.action.BaseAction;
+import net.cfrost.web.core.base.action.BaseAction;
 import net.cfrost.web.module.blog.domain.Blog;
 import net.cfrost.web.module.blog.domain.Tag;
 import net.cfrost.web.module.blog.service.IBlogService;
