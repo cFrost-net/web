@@ -3,7 +3,7 @@ package net.cfrost.web.module.blog.domain;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import net.cfrost.web.base.domain.BaseEntity;
+import net.cfrost.web.core.base.domain.BaseEntity;
 
 
 @SuppressWarnings("serial")

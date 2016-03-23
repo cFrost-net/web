@@ -28,7 +28,7 @@
     <!-- ACCESS FILTER -->
     <filter>
         <filter-name>accessFilter</filter-name>
-        <filter-class>net.cfrost.web.security.filter.AccessFilter</filter-class>
+        <filter-class>net.cfrost.web.core.security.filter.AccessFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>accessFilter</filter-name>
@@ -38,7 +38,7 @@
     <!-- LOGIN FILTER 
     <filter>
         <filter-name>loginFilter</filter-name>
-        <filter-class>net.cfrost.web.security.filter.LoginFilter</filter-class>
+        <filter-class>net.cfrost.web.core.security.filter.LoginFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>loginFilter</filter-name>
@@ -48,7 +48,7 @@
     <!-- PERMISSION FILTER 
     <filter>
         <filter-name>permissionControlFilter</filter-name>
-        <filter-class>net.cfrost.web.security.filter.PermissionControlFilter</filter-class>
+        <filter-class>net.cfrost.web.core.security.filter.PermissionControlFilter</filter-class>
         <init-param>
             <param-name>webFolders</param-name>
             <param-value>css,images,scripts/lib/*,scripts,files</param-value>
@@ -71,6 +71,9 @@
 
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>net.cfrost.web.core.security.jwt.JwtListener</listener-class>
     </listener>
 
     <error-page>

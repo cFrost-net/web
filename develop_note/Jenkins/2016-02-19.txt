@@ -17,7 +17,7 @@ Time:2016-02-19
 # make prefix=/usr/local/git all
 # make prefix=/usr/local/git install
 
-# ln -s /usr/bin/git /usr/local/git/bin/git
+# ln -s /usr/local/git/bin/git /usr/bin/git
 OR
 # echo "export PATH=$PATH:/usr/local/git/bin" >> /etc/bashrc
 # source /etc/bashrc
@@ -50,6 +50,6 @@ OR
 # chown jenkins:jenkins /jenkins
 # service jenkins start
 
-4.与GitLab即成
+4.与GitLab集成
 需要插件: Git Plugin GitLab Plugin
 注意: 如果用webhooks激活构建需要配置分支过滤，否则任意分支的事件均可激活构件

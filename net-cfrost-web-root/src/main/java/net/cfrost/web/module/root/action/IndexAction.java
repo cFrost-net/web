@@ -5,7 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.cfrost.web.base.action.BaseAction;
+import net.cfrost.web.core.base.action.BaseAction;
 import net.cfrost.web.module.root.domain.DevProcess;
 import net.cfrost.web.module.root.service.IIndexService;
 
