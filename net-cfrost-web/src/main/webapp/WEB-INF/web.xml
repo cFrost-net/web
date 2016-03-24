@@ -25,7 +25,7 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!-- ACCESS FILTER -->
+    <!-- ACCESS FILTER 
     <filter>
         <filter-name>accessFilter</filter-name>
         <filter-class>net.cfrost.web.core.security.filter.AccessFilter</filter-class>
@@ -33,7 +33,7 @@
     <filter-mapping>
         <filter-name>accessFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
 
     <!-- LOGIN FILTER 
     <filter>
@@ -72,9 +72,9 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-    <listener>
+    <!--  listener>
         <listener-class>net.cfrost.web.core.security.jwt.JwtListener</listener-class>
-    </listener>
+    </listener>-->
 
     <error-page>
         <error-code>404</error-code>
