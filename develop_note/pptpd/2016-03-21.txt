@@ -1,4 +1,4 @@
-2016-03-21
+﻿2016-03-21
 
 
 检测是否支持
@@ -22,8 +22,8 @@ vi /etc/sysctl.conf
 
 net.ipv4.ip_forward = 1
 执行：
-
 /sbin/sysctl -p
+
 配置
 
 修改 /etc/ppp/options.pptpd
