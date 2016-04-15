@@ -93,13 +93,18 @@
                 <prop key="hiberante.format_sql">${hibernate.format_sql}</prop>
             </props>
         </property>
-        <property name="configLocations">
+        <property name="packagesToScan">
+            <array>
+                <value>net.cfrost.web.**.entity</value>
+            </array>
+        </property>
+        <!-- <property name="configLocations">
             <list>
                 <value>
                     classpath*:mapping.xml
                 </value>
             </list>
-        </property>
+        </property> -->
     </bean>
 
     <!-- 事务管理器 -->

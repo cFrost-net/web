@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.cfrost.web.core.base.dao.hibernate5.impl.BaseDao;
 import net.cfrost.web.module.root.dao.IDevProcessDao;
-import net.cfrost.web.module.root.domain.DevProcess;
+import net.cfrost.web.module.root.entity.DevProcess;
 
 public class DevProcessDao extends BaseDao<DevProcess> implements
         IDevProcessDao {

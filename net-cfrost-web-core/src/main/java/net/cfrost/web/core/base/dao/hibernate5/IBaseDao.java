@@ -3,8 +3,7 @@ package net.cfrost.web.core.base.dao.hibernate5;
 import java.io.Serializable;
 import java.util.List;
 
-import net.cfrost.web.core.base.domain.BaseEntity;
-
+import net.cfrost.web.core.base.entity.BaseEntity;
 import org.hibernate.criterion.DetachedCriteria;
 
 public interface IBaseDao<T extends BaseEntity<?>>{

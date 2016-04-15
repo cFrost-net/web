@@ -1,20 +1,25 @@
 package net.cfrost.web.core.base.dao.hibernate5.impl;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import net.cfrost.common.Generic;
 import net.cfrost.web.core.base.dao.hibernate5.IBaseDao;
-import net.cfrost.web.core.base.domain.BaseEntity;
-
+import net.cfrost.web.core.base.entity.BaseEntity;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 
 public abstract class BaseDao<T extends BaseEntity<?>> implements IBaseDao<T> {
+    
+    protected final Logger log = LogManager.getLogger();
 
+    @Resource(name="sessionFactory")
     private SessionFactory sessionFactory;
 
     public SessionFactory getSessionFactory() {
@@ -50,12 +55,6 @@ public abstract class BaseDao<T extends BaseEntity<?>> implements IBaseDao<T> {
 
     @Override
     public Serializable saveOrUpdate(T entity) {
-        
-        Date date = new Date();
-        if(entity.getCreateDate() == null)
-            entity.setCreateDate(date);
-        entity.setModifyDate(date);
-        entity.setIfDel(0);
         
         if(entity.getId() != null){
             this.update(entity);

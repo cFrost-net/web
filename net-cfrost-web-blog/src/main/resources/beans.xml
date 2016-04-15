@@ -14,9 +14,6 @@
            http://www.springframework.org/schema/tx   
            http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 
-    <bean id="blogAction" class="net.cfrost.web.module.blog.action.BlogAction">
-        <property name="blogService" ref="blogService"/>
-    </bean>
     <bean id="blogService" class="net.cfrost.web.module.blog.service.impl.BlogService">
         <property name="blogDao" ref="blogDao"/>
         <property name="tagDao" ref="tagDao"/>

@@ -56,6 +56,6 @@ public class UrlTool {
 //      System.out.println("requestURI:"+requestURI);
 //      System.out.println("contextPath:"+contextPath);
         
-        return requestURI.replaceFirst(contextPath, "");
+        return requestURI.replaceFirst(contextPath, "").trim();
     }
 }

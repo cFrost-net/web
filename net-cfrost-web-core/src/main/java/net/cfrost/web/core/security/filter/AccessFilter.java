@@ -11,7 +11,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import net.cfrost.web.core.log.domain.AccessLog;
+import net.cfrost.web.core.log.entity.AccessLog;
 import net.cfrost.web.core.util.Log;
 import net.cfrost.web.core.util.UrlTool;
 

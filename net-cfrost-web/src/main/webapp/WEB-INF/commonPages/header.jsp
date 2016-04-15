@@ -4,20 +4,14 @@
 <meta http-equiv="X-Frame-Options" content="SAMEORIGIN"> 
 
 <link rel="stylesheet" type="text/css"
-    href="<%=request.getContextPath()%>/css/frame.css" />
+    href="<%=request.getContextPath()%>/resources/css/frame.css" />
 <link rel="stylesheet" type="text/css"
-    href="<%=request.getContextPath()%>/css/global.css" />
+    href="<%=request.getContextPath()%>/resources/css/global.css" />
 <link rel="stylesheet" type="text/css"
-    href="<%=request.getContextPath()%>/css/header.css" />
+    href="<%=request.getContextPath()%>/resources/css/header.css" />
 <link rel="stylesheet" type="text/css"
-    href="<%=request.getContextPath()%>/css/footer.css" />
+    href="<%=request.getContextPath()%>/resources/css/footer.css" />
 
-<script type="text/javascript"
-    src="<%=request.getContextPath()%>/scripts/lib/jquery-2.1.4.js"></script>
-<script type="text/javascript"
-    src="<%=request.getContextPath()%>/scripts/util.js"></script>
-<script type="text/javascript"
-    src="<%=request.getContextPath()%>/scripts/header.js"></script>
 </head>
 <body>
     <div id="__page__">
@@ -65,7 +59,7 @@
                         <li class="child_li"><a
                             href="javascript:void(0);">设置</a></li>
                         <li class="last_child_li"><a
-                            href="javascript:void(0);">注销</a></li>
+                            href="<%=request.getContextPath()%>/logout">注销</a></li>
                     </ul>
                 </li>
             </div>
