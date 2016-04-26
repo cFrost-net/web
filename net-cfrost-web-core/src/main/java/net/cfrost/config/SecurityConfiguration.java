@@ -1,6 +1,9 @@
 package net.cfrost.config;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -39,13 +42,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     
     @Resource
     private IAuthService authService;
-    @Value("${springSecurity.ignoreUrl}")
-    private String ignoreUrl;
+    @Value("${springSecurity.ignoreUrls}")
+    private String ignoreUrls;
     
     @Override
     public void configure(WebSecurity security){
-        security.ignoring().antMatchers(this.ignoreUrl);
-        this.log.info("SPRING SECURITY CONFIG: Add ignore url \""+ this.ignoreUrl +"\"");
+        String[] antMatchers = this.ignoreUrls.trim().split(",");
+        security.ignoring().antMatchers(antMatchers);
+        this.log.info("SPRING SECURITY CONFIG: Add ignore urls: \""+ Arrays.asList(antMatchers) +"\"");
     }
     
     @Override
@@ -53,20 +57,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         List<RoleAuth> roleAuthList = this.authService.findAllRoleAuth();
         
         if(roleAuthList != null){
-            for(RoleAuth roleAuth : roleAuthList){
+            setAuth:for(RoleAuth roleAuth : roleAuthList){
                 if(roleAuth.getRoles() == null || roleAuth.getRoles().isEmpty()) continue;
+
+                Set<Role> roleSet = roleAuth.getRoles();
+                Set<String> roleNameList = new HashSet<>();
                 
-                if(roleAuth.getRoles().contains(Role.ANONYMOUS)){
-                    security.authorizeRequests().antMatchers(roleAuth.getUrlMatcher()).permitAll();
-                    this.log.info("SPRING SECURITY CONFIG: Add role to "+roleAuth.getUrlMatcher()+" PERMIT_ALL");
-                }else {
-                    String[] roles = roleAuth.getRoles().toArray(new String[0]);
-                    security.authorizeRequests().antMatchers(roleAuth.getUrlMatcher()).hasAnyAuthority(roles);
-                    this.log.info("SPRING SECURITY CONFIG: Add roles to "+roleAuth.getUrlMatcher()+" : "+roleAuth.getRoles());
+                for(Role role : roleSet){
+                    if(Role.ANONYMOUS.equals(role.getName())){
+                        security.authorizeRequests().antMatchers(roleAuth.getUrlMatcher()).permitAll();
+                        this.log.info("SPRING SECURITY CONFIG: Add role to "+roleAuth.getUrlMatcher()+" PERMIT_ALL");
+                        continue setAuth;
+                    }                    
+                    roleNameList.add(role.getName());
                 }
+                
+                String[] roles = roleNameList.toArray(new String[0]);
+                security.authorizeRequests().antMatchers(roleAuth.getUrlMatcher()).hasAnyAuthority(roles);
+                this.log.info("SPRING SECURITY CONFIG: Add roles to "+roleAuth.getUrlMatcher()+" : "+roleNameList);
             }
         }
-        
+        security.authorizeRequests().anyRequest().denyAll();
         security.formLogin()
             .loginPage("/login").failureUrl("/login?error")
             .defaultSuccessUrl("/")

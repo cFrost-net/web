@@ -5,7 +5,7 @@ function initPage() {
 
 function loadBlog() {
     $.ajax({
-        url: "loadBlog",
+        url: "./loadBlog",
         type: "GET",
         dataType:'json',
         success:displayBlogs,

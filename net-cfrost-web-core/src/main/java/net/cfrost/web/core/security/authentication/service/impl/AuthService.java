@@ -1,13 +1,11 @@
 package net.cfrost.web.core.security.authentication.service.impl;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
 
-import net.cfrost.common.StringTool;
 import net.cfrost.web.core.base.service.impl.BaseService;
 import net.cfrost.web.core.security.authentication.dao.IRoleAuthDao;
 import net.cfrost.web.core.security.authentication.dao.IRoleDao;
@@ -68,24 +66,11 @@ public class AuthService extends BaseService implements IAuthService, UserDetail
     public List<RoleAuth> findAllRoleAuth() {
         List<RoleAuth> roleAuthList =  this.roleAuthDao.findAppRoleAuth();        
         if(roleAuthList == null|| roleAuthList.isEmpty()) return null;
-
-        List<Role> roleList  = this.roleDao.findAllRoles();
-        if(roleList == null|| roleList.isEmpty()) return roleAuthList;
         
-        for(RoleAuth  roleAuth : roleAuthList) {
-            Set<String> roleIdSet = new HashSet<>(Arrays.asList(roleAuth.getRoleIds().trim().replaceAll(" ", "").split(",")));
-            for(Role role : roleList){
-                if(StringTool.isNull(role.getName()))
-                    continue;
-                
-                if(roleIdSet.contains(role.getId().toString())){
-                    if(roleAuth.getRoles() == null){
-                        roleAuth.setRoles(new HashSet<String>());
-                    }
-                    roleAuth.getRoles().add(role.getName().trim());
-                }
-            }
+        for(RoleAuth roleAuth : roleAuthList){
+            roleAuth.getRoles().size();
         }
+        
         return roleAuthList;
     }
 
