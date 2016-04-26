@@ -26,7 +26,7 @@ public class FrameworkBootstrap implements WebApplicationInitializer {
     private static final Logger log = LogManager.getLogger();
     @Override
     public void onStartup(ServletContext container) throws ServletException {
-        String[] urls = {"/resources/*", "/index.html"};
+        String[] urls = {"/resources/*"};
         container.getServletRegistration("default").addMapping(urls);
         
 //        XmlWebApplicationContext rootContext = new XmlWebApplicationContext();

@@ -8,7 +8,6 @@
 <div id="progress"
     style="margin-top: -1px; padding: 10px;">
     <p>This site is being built...</p>
-    <a href="blog/findAllBlogs">blog/findAllBlogs</a>
 </div>
 
 <%@ include file="/WEB-INF/commonPages/footer.jsp"%>
