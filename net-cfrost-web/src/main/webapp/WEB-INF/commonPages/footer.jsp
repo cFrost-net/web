@@ -2,7 +2,7 @@
 <%@ page import="java.text.SimpleDateFormat,java.util.Date" %>
             </div>
         </div>
-        <footer>Version 0.0.1 &copy;<%=new SimpleDateFormat("yyyy").format(new Date()) %>&nbsp;cFrost&nbsp;<a id="icp"
+        <footer>Version 0.0.2 &copy;<%=new SimpleDateFormat("yyyy").format(new Date()) %>&nbsp;cFrost&nbsp;<a id="icp"
                 href="http://www.miitbeian.gov.cn" target="_Blank">粤ICP备15054669号</a>
         </footer>
     </div>
