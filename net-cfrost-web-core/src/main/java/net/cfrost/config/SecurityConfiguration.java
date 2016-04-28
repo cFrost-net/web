@@ -111,12 +111,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                + "where UR.USER_ID = U.ID) URR where R.ID = URR.ROLE_ID")
 //        .passwordEncoder(new BCryptPasswordEncoder());
 //        if(this.ldapEnable){
-            auth.authenticationProvider(this.ldapAuthenticationProvider);
-            this.log.info("SPRING SECURITY CONFIG: LDAP ENABLED");
+//            auth.authenticationProvider(this.ldapAuthenticationProvider);
+//            this.log.info("SPRING SECURITY CONFIG: LDAP ENABLED");
 //        }
 //        else {
-//            auth.authenticationProvider(usernamePasswordAuthenticationProvider);
-//            this.log.info("SPRING SECURITY CONFIG: LDAP DISABLED");
+            auth.authenticationProvider(usernamePasswordAuthenticationProvider);
+            this.log.info("SPRING SECURITY CONFIG: LDAP DISABLED");
 //        }
     }
 }

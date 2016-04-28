@@ -43,28 +43,14 @@
         <filter-name>accessFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>-->
-
-    <!-- PERMISSION FILTER
-    <filter>
-        <filter-name>permissionControlFilter</filter-name>
-        <filter-class>net.cfrost.web.core.security.filter.PermissionControlFilter</filter-class>
-        <init-param>
-            <param-name>webFolders</param-name>
-            <param-value>css,images,scripts/lib/*,scripts,files</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>permissionControlFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>-->
     
-    <!-- PRE LOGIN FILTER 
+    <!-- PRE LOGGING FILTER 
     <filter>
-        <filter-name>preLoginFilter</filter-name>
-        <filter-class>net.cfrost.web.core.security.filter.PreLoginFilter</filter-class>
+        <filter-name>preLoggingFilter</filter-name>
+        <filter-class>net.cfrost.web.core.security.filter.PreLoggingFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>preLoginFilter</filter-name>
+        <filter-name>preLoggingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>-->
     
@@ -78,13 +64,13 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>-->
 
-    <!-- AFTER LOGIN FILTER 
+    <!-- POST LOGGING FILTER 
     <filter>
-        <filter-name>afterLoginFilter</filter-name>
-        <filter-class>net.cfrost.web.core.security.filter.AfterLoginFilter</filter-class>
+        <filter-name>postLoggingFilter</filter-name>
+        <filter-class>net.cfrost.web.core.security.filter.PostLoggingFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>afterLoginFilter</filter-name>
+        <filter-name>postLoggingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>-->
 

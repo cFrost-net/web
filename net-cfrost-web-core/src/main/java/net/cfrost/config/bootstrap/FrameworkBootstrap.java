@@ -14,6 +14,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
 @Order(1)
@@ -52,11 +53,16 @@ public class FrameworkBootstrap implements WebApplicationInitializer {
         );
         dispatcher.setLoadOnStartup(2);
         dispatcher.addMapping("/webapi/*");
+
+        FilterRegistration.Dynamic characterEncodingFilter = container.addFilter(
+                "characterEncodingFilter", new CharacterEncodingFilter("UTF-8")
+        );
+        characterEncodingFilter.addMappingForUrlPatterns(null, false, "/*");
         
-        FilterRegistration.Dynamic registration = container.addFilter(
+        FilterRegistration.Dynamic preLoggingFilter = container.addFilter(
                 "preLoggingFilter", new PreLoggingFilter()
         );
-        registration.addMappingForUrlPatterns(null, false, "/*");
+        preLoggingFilter.addMappingForUrlPatterns(null, false, "/*");
         
         log.info("Web Config Loaded!");
     }
