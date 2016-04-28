@@ -1,14 +1,17 @@
 package net.cfrost.web.module.blog.service.impl;
 
+import java.util.List;
+
+import net.cfrost.web.core.base.service.impl.BaseService;
 import net.cfrost.web.module.blog.dao.IBlogDao;
 import net.cfrost.web.module.blog.dao.ITagDao;
-import net.cfrost.web.module.blog.domain.Blog;
-import net.cfrost.web.module.blog.domain.Tag;
+import net.cfrost.web.module.blog.entity.Blog;
+import net.cfrost.web.module.blog.entity.Tag;
 import net.cfrost.web.module.blog.service.IBlogService;
 
 import org.springframework.transaction.annotation.Transactional;
 
-public class BlogService implements IBlogService {
+public class BlogService extends BaseService implements IBlogService {
 
     private IBlogDao blogDao;
     private ITagDao tagDao;
@@ -24,13 +27,8 @@ public class BlogService implements IBlogService {
     @Transactional
     public Blog newBlog() {
         Blog blog = new Blog();
-        blog.setName("中文新2");
-        this.blogDao.saveOrUpdate(blog);
-        blog = this.blogDao.get(blog.getId());
-        System.out.println("new:"+blog.getId()+":"+blog.getName());
-        blog = this.blogDao.get(1L);
-        System.out.println("old:"+blog.getId()+":"+blog.getName());
-        
+        blog.setName("新ABC");
+        this.blogDao.saveOrUpdate(blog);        
         return blog;
     }
 
@@ -41,5 +39,20 @@ public class BlogService implements IBlogService {
         this.tagDao.saveOrUpdate(tag);
         
         return tag;
+    }
+
+    @Override
+    @Transactional
+    public List<Blog> findAllBlogs() {
+        this.log.warn("test warn");
+        this.log.info("test info");
+        this.log.error("test error");
+        return this.blogDao.findAll();
+    }
+
+    @Override
+    @Transactional
+    public Blog find(long id) {
+        return this.blogDao.get(id);
     }
 }

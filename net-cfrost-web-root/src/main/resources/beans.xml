@@ -14,9 +14,6 @@
            http://www.springframework.org/schema/tx   
            http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 
-    <bean id="indexAction" class="net.cfrost.web.module.root.action.IndexAction">
-        <property name="indexService" ref="indexService"/>
-    </bean>
     <bean id="indexService" class="net.cfrost.web.module.root.service.impl.IndexService">
         <property name="devProcessDao" ref="devProcessDao"/>
     </bean>

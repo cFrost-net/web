@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-                        http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+                        http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
     <display-name>Archetype Created Web Application</display-name>
 
+    <!-- SPRING LISTENER & CONFIG 
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath*:beans.xml</param-value>
     </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>-->
+    
+    <!-- JWT LISTENER 
+    <listener>
+        <listener-class>net.cfrost.web.core.security.jwt.JwtListener</listener-class>
+    </listener>-->
 
-    <!-- ENCODING FILTER -->
+    <!-- ENCODING FILTER 
     <filter>
         <filter-name>encoding</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -23,9 +32,9 @@
     <filter-mapping>
         <filter-name>encoding</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
 
-    <!-- ACCESS FILTER 
+    <!-- ACCESS FILTER
     <filter>
         <filter-name>accessFilter</filter-name>
         <filter-class>net.cfrost.web.core.security.filter.AccessFilter</filter-class>
@@ -35,17 +44,7 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>-->
 
-    <!-- LOGIN FILTER 
-    <filter>
-        <filter-name>loginFilter</filter-name>
-        <filter-class>net.cfrost.web.core.security.filter.LoginFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>loginFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>-->
-
-    <!-- PERMISSION FILTER 
+    <!-- PERMISSION FILTER
     <filter>
         <filter-name>permissionControlFilter</filter-name>
         <filter-class>net.cfrost.web.core.security.filter.PermissionControlFilter</filter-class>
@@ -58,26 +57,98 @@
         <filter-name>permissionControlFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>-->
-
-    <!-- STRUTS2 FILTER -->
+    
+    <!-- PRE LOGIN FILTER 
     <filter>
-        <filter-name>struts2</filter-name>
-        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+        <filter-name>preLoginFilter</filter-name>
+        <filter-class>net.cfrost.web.core.security.filter.PreLoginFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>struts2</filter-name>
+        <filter-name>preLoginFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
+    
+    <!-- SPRING SECURITY FILTER 
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>-->
 
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-    <!--  listener>
-        <listener-class>net.cfrost.web.core.security.jwt.JwtListener</listener-class>
-    </listener>-->
+    <!-- AFTER LOGIN FILTER 
+    <filter>
+        <filter-name>afterLoginFilter</filter-name>
+        <filter-class>net.cfrost.web.core.security.filter.AfterLoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>afterLoginFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>-->
+
+    <!-- SPRING MVC CONTROLLER 
+    <servlet>
+        <servlet-name>springWebDispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>springWebDispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>-->
+    
+    <!-- SPRING MVC REST CONTROLLER 
+    <servlet>
+        <servlet-name>springRestDispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>springRestDispatcher</servlet-name>
+        <url-pattern>/webapi/*</url-pattern>
+    </servlet-mapping>-->
+    
+    <!-- JERSEY 
+    <servlet>
+        <servlet-name>Jersey Web Application</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>net.cfrost.web.module.blog.jersey</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Jersey Web Application</servlet-name>
+        <url-pattern>/webapi/*</url-pattern>
+    </servlet-mapping>-->
 
     <error-page>
         <error-code>404</error-code>
         <location>/404.jsp</location>
     </error-page>
+    
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <url-pattern>*.jspf</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+            <!-- <scripting-invalid>true</scripting-invalid> 不支持<%%>语法-->
+            <include-prelude>/WEB-INF/commonPages/base.jsp</include-prelude>
+            <trim-directive-whitespaces>true</trim-directive-whitespaces>
+            <default-content-type>text/html</default-content-type>
+        </jsp-property-group>
+    </jsp-config>
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+
+    <distributable />
 </web-app>

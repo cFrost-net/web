@@ -5,7 +5,7 @@ import java.util.List;
 import net.cfrost.web.core.base.service.impl.BaseService;
 import net.cfrost.web.module.root.service.IIndexService;
 import net.cfrost.web.module.root.dao.IDevProcessDao;
-import net.cfrost.web.module.root.domain.DevProcess;
+import net.cfrost.web.module.root.entity.DevProcess;
 
 public class IndexService extends BaseService implements IIndexService {
 

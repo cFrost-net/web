@@ -5,13 +5,17 @@
     <parent>
         <groupId>net.cfrost</groupId>
         <artifactId>net-cfrost</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.1</version>
     </parent>
     <artifactId>net-cfrost-web-blog</artifactId>
     <name>blog.cfrost.net</name>
     <description>blog.cfrost.net</description>
 
     <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>net-cfrost-web-core</artifactId>
