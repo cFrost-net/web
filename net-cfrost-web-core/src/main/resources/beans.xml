@@ -22,7 +22,7 @@
     <import resource="db_config.xml"/>
     <!--import resource="security.xml"/-->
     
-    <context:component-scan base-package="net.cfrost.web" />
+    <!--<context:component-scan base-package="net.cfrost.web" />-->
 
     <bean id="log" class="net.cfrost.web.core.util.Log">
         <property name="logService" ref="logService"/>
