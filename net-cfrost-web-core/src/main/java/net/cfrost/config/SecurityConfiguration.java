@@ -8,32 +8,21 @@ import java.util.Set;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
-import net.cfrost.web.core.security.authentication.MyLdapAuthenticationProvider;
-import net.cfrost.web.core.security.authentication.SimpleRoleGrantingLdapAuthoritiesPopulator;
 import net.cfrost.web.core.security.authentication.entity.Role;
 import net.cfrost.web.core.security.authentication.entity.RoleAuth;
 import net.cfrost.web.core.security.authentication.service.IAuthorityService;
-import net.cfrost.web.core.security.authentication.service.IUserService;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.ldap.core.support.BaseLdapPathContextSource;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
-import org.springframework.security.ldap.authentication.BindAuthenticator;
-import org.springframework.security.ldap.authentication.LdapAuthenticationProvider;
-import org.springframework.security.ldap.authentication.LdapAuthenticator;
-import org.springframework.security.ldap.search.FilterBasedLdapUserSearch;
-import org.springframework.security.ldap.search.LdapUserSearch;
-import org.springframework.security.ldap.userdetails.LdapAuthoritiesPopulator;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -44,7 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Resource
     private IAuthorityService authorityService;
     @Resource
-    private IUserService userService;
+    private UserDetailsService userDetailsService;
     
     @Value("${springSecurity.ignoreUrls}")
     private String ignoreUrls;
@@ -103,18 +92,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Value("${ldap.enable}")
     private boolean ldapEnable;
-    @Value("${ldap.url}")
-    private String ldapUrl;
-    @Value("${ldap.userDN}")
-    private String ldapUserDN;
-    @Value("${ldap.password}")
-    private String password;
-    @Value("${ldap.searchBase}")
-    private String searchBase;
-    @Value("${ldap.searchFilter}")
-    private String searchFilter;
+    
     @Resource(name="usernamePasswordAuthenticationProvider")
-    private AuthenticationProvider usernamePasswordAuthenticationProvider;
+    private AuthenticationProvider usernamePasswordAuthenticationProvider;    
+    @Resource(name="ldapAuthenticationProvider")
+    private AuthenticationProvider ldapAuthenticationProvider;
     @Resource
     private DataSource dataSource;
 
@@ -129,80 +111,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                + "where UR.USER_ID = U.ID) URR where R.ID = URR.ROLE_ID")
 //        .passwordEncoder(new BCryptPasswordEncoder());
 //        if(this.ldapEnable){
-//            auth.authenticationProvider(this.ldapAuthenticationProvider());
-//            this.log.info("SPRING SECURITY CONFIG: LDAP ENABLED");
+            auth.authenticationProvider(this.ldapAuthenticationProvider);
+            this.log.info("SPRING SECURITY CONFIG: LDAP ENABLED");
 //        }
 //        else {
-            auth.authenticationProvider(usernamePasswordAuthenticationProvider);
-            this.log.info("SPRING SECURITY CONFIG: LDAP DISABLED");
+//            auth.authenticationProvider(usernamePasswordAuthenticationProvider);
+//            this.log.info("SPRING SECURITY CONFIG: LDAP DISABLED");
 //        }
     }
-    
-    private MyLdapAuthenticationProvider ldapAuthenticationProvider;
-    
-    private DefaultSpringSecurityContextSource contextSource;
-    
-    private LdapUserSearch userSearch;
-    
-    private BindAuthenticator ldapBindAuthenticator;
-    
-    private SimpleRoleGrantingLdapAuthoritiesPopulator ldapAuthoritiesPopulator;
-    
-    public LdapAuthenticationProvider ldapAuthenticationProvider(){
-        if(this.ldapAuthenticationProvider != null)
-            return this.ldapAuthenticationProvider;
-        this.ldapAuthenticationProvider = new MyLdapAuthenticationProvider(this.ldapBindAuthenticator(), this.ldapAuthoritiesPopulator());
-        this.ldapAuthenticationProvider.setAuthService(this.userService);
-        return this.ldapAuthenticationProvider;
-    }
-    
-    public LdapUserSearch userSearch(){
-        if(this.userSearch != null)
-            return this.userSearch;
-        this.userSearch = new FilterBasedLdapUserSearch(this.searchBase, this.searchFilter ,this.contextSource());
-        return this.userSearch;
-    }
-    
-    public LdapAuthenticator ldapBindAuthenticator(){
-        if(this.ldapBindAuthenticator != null)
-            return this.ldapBindAuthenticator;
-        this.ldapBindAuthenticator = new BindAuthenticator(this.contextSource());
-        this.ldapBindAuthenticator.setUserSearch(this.userSearch());
-        return this.ldapBindAuthenticator;
-    }
-    
-    public LdapAuthoritiesPopulator ldapAuthoritiesPopulator(){
-        if(this.ldapAuthoritiesPopulator != null)
-            return this.ldapAuthoritiesPopulator;
-        this.ldapAuthoritiesPopulator = new SimpleRoleGrantingLdapAuthoritiesPopulator();
-        this.ldapAuthoritiesPopulator.setAuthService(this.userService);
-        return this.ldapAuthoritiesPopulator;
-    }
-    
-    @Bean
-    public BaseLdapPathContextSource contextSource(){
-        if(this.contextSource != null)
-            return this.contextSource;
-        this.contextSource = new DefaultSpringSecurityContextSource(this.ldapUrl);
-        this.contextSource.setUserDn(this.ldapUserDN);
-        this.contextSource.setPassword(this.password);
-        return this.contextSource;        
-    }
-    
-//    public CasAuthenticationProvider casAuthenticationProvider() {
-//        CasAuthenticationProvider casAuthenticationProvider = new CasAuthenticationProvider();
-//        
-//        return casAuthenticationProvider;
-//    }
-//    
-//    public UserDetailsByNameServiceWrapper casAuthenticationUserDetailsService() {
-//        UserDetailsByNameServiceWrapper casAuthenticationUserDetailsService = new UserDetailsByNameServiceWrapper();
-//        return casAuthenticationUserDetailsService;
-//    }
-//    
-//    public static void main(String[] args){
-//        BCryptPasswordEncoder c = new BCryptPasswordEncoder();
-//        System.out.print(c.encode("test"));
-//        System.out.print(c.matches("test", "$2a$10$39PpKmXP6yw6drboC4NFROQsKC1i3SsU6HzajedniazUomN2PNHaq"));
-//    }
 }
