@@ -94,7 +94,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private boolean ldapEnable;
     
     @Resource(name="usernamePasswordAuthenticationProvider")
-    private AuthenticationProvider usernamePasswordAuthenticationProvider;    
+    private AuthenticationProvider usernamePasswordAuthenticationProvider;
     @Resource(name="ldapAuthenticationProvider")
     private AuthenticationProvider ldapAuthenticationProvider;
     @Resource
