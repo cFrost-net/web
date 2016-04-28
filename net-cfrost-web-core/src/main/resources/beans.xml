@@ -36,11 +36,6 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     
-    <bean id="authService" class="net.cfrost.web.core.security.authentication.service.impl.AuthService">
-        <property name="userDao" ref="userDao"/>
-        <property name="roleDao" ref="roleDao"/>
-        <property name="roleAuthDao" ref="roleAuthDao"/>
-    </bean>
     
     <bean id="userDao" class="net.cfrost.web.core.security.authentication.dao.impl.UserDao">
         <property name="sessionFactory" ref="sessionFactory"/>
@@ -50,10 +45,19 @@
     </bean>
     <bean id="roleAuthDao" class="net.cfrost.web.core.security.authentication.dao.impl.RoleAuthDao">
         <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>    
+    </bean>
     
-    <bean id="authenticationProvider" class="net.cfrost.web.core.security.authentication.provider.UsernamePasswordAuthenticationProvider">
-        <property name="userDetailsService" ref="authService"/>
+    <bean id="userService" class="net.cfrost.web.core.security.authentication.service.impl.UserService">
+        <property name="userDao" ref="userDao"/>
+        <property name="passwordEncoder" ref="passwordEncoder"/>
+    </bean>
+    
+    <bean id="authorityService" class="net.cfrost.web.core.security.authentication.service.impl.AuthorityService">
+        <property name="roleAuthDao" ref="roleAuthDao"/>
+    </bean>
+    
+    <bean id="usernamePasswordAuthenticationProvider" class="net.cfrost.web.core.security.authentication.provider.UsernamePasswordAuthenticationProvider">
+        <property name="userDetailsService" ref="userService"/>
         <property name="passwordEncoder" ref="passwordEncoder"/>
     </bean>    
     

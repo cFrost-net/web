@@ -4,16 +4,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.Resource;
-
 import net.cfrost.web.core.base.service.impl.BaseService;
-import net.cfrost.web.core.security.authentication.dao.IRoleAuthDao;
-import net.cfrost.web.core.security.authentication.dao.IRoleDao;
 import net.cfrost.web.core.security.authentication.dao.IUserDao;
 import net.cfrost.web.core.security.authentication.entity.Role;
-import net.cfrost.web.core.security.authentication.entity.RoleAuth;
 import net.cfrost.web.core.security.authentication.entity.User;
-import net.cfrost.web.core.security.authentication.service.IAuthService;
+import net.cfrost.web.core.security.authentication.service.IUserService;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,27 +19,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
-public class AuthService extends BaseService implements IAuthService, UserDetailsService {
+public class UserService extends BaseService implements IUserService, UserDetailsService {
 
     private IUserDao userDao;
-    private IRoleDao roleDao;
-    private IRoleAuthDao roleAuthDao;
-    @Resource
+    
     private PasswordEncoder passwordEncoder;
 
     public void setUserDao(IUserDao userDao) {
         this.userDao = userDao;
     }
-
-    public void setRoleDao(IRoleDao roleDao) {
-        this.roleDao = roleDao;
-    }
-
-    public void setRoleAuthDao(IRoleAuthDao roleAuthDao) {
-        this.roleAuthDao = roleAuthDao;
-    }
-    
-    public AuthService(){;
+        
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -60,18 +46,6 @@ public class AuthService extends BaseService implements IAuthService, UserDetail
             }
         }
         return user;
-    }
-
-    @Override
-    public List<RoleAuth> findAllRoleAuth() {
-        List<RoleAuth> roleAuthList =  this.roleAuthDao.findAppRoleAuth();        
-        if(roleAuthList == null|| roleAuthList.isEmpty()) return null;
-        
-        for(RoleAuth roleAuth : roleAuthList){
-            roleAuth.getRoles().size();
-        }
-        
-        return roleAuthList;
     }
 
     @Override

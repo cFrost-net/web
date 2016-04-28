@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.cfrost.web.core.security.authentication.entity.Role;
-import net.cfrost.web.core.security.authentication.service.IAuthService;
+import net.cfrost.web.core.security.authentication.service.IUserService;
 
 import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,16 +13,16 @@ import org.springframework.security.ldap.userdetails.LdapAuthoritiesPopulator;
 
 public class SimpleRoleGrantingLdapAuthoritiesPopulator implements LdapAuthoritiesPopulator {
     
-    private IAuthService authService;
+    private IUserService userService;
 
-    public void setAuthService(IAuthService authService) {
-        this.authService = authService;
+    public void setAuthService(IUserService userService) {
+        this.userService = userService;
     }
 
     public Collection<SimpleGrantedAuthority> getGrantedAuthorities(DirContextOperations userData, String username) {
 
         System.out.println("赋权限");
-        net.cfrost.web.core.security.authentication.entity.User user = this.authService
+        net.cfrost.web.core.security.authentication.entity.User user = this.userService
                 .findUserByName(username, true);
 
         List<SimpleGrantedAuthority> list = new ArrayList<SimpleGrantedAuthority>();

@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 import net.cfrost.web.core.base.entity.RetResult;
 import net.cfrost.web.core.base.rest.BaseRest;
 import net.cfrost.web.core.security.authentication.entity.User;
-import net.cfrost.web.core.security.authentication.service.IAuthService;
+import net.cfrost.web.core.security.authentication.service.IUserService;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -22,18 +22,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class RootRest extends BaseRest {
     
     @Resource
-    private IAuthService authService;    
+    private IUserService userService;    
     
     @RequestMapping(value = { "/createUser" }, method = RequestMethod.POST)
     public String createUser(@ModelAttribute( "user" ) User user){
-        this.authService.createUser(user.getUsername(), user.getPassword());
+        this.userService.createUser(user.getUsername(), user.getPassword());
         return "/root/login";
     }
     
     @ResponseBody
     @RequestMapping(value = { "/getUser/all" }, method = RequestMethod.GET)
     public RetResult<User> getUserAll(){
-        List<User> allUsers = this.authService.findAllUsers(true);
+        List<User> allUsers = this.userService.findAllUsers(true);
         RetResult<User> ret = new RetResult<User>(allUsers);
         ret.setReturnFlag(RetResult.SUCCESS);
         return ret;

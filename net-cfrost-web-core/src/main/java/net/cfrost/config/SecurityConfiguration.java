@@ -12,7 +12,8 @@ import net.cfrost.web.core.security.authentication.MyLdapAuthenticationProvider;
 import net.cfrost.web.core.security.authentication.SimpleRoleGrantingLdapAuthoritiesPopulator;
 import net.cfrost.web.core.security.authentication.entity.Role;
 import net.cfrost.web.core.security.authentication.entity.RoleAuth;
-import net.cfrost.web.core.security.authentication.service.IAuthService;
+import net.cfrost.web.core.security.authentication.service.IAuthorityService;
+import net.cfrost.web.core.security.authentication.service.IUserService;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,7 +42,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected final Logger log = LogManager.getLogger();
     
     @Resource
-    private IAuthService authService;
+    private IAuthorityService authorityService;
+    @Resource
+    private IUserService userService;
+    
     @Value("${springSecurity.ignoreUrls}")
     private String ignoreUrls;
     
@@ -54,7 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     
     @Override
     public void configure(HttpSecurity security) throws Exception{
-        List<RoleAuth> roleAuthList = this.authService.findAllRoleAuth();
+        List<RoleAuth> roleAuthList = this.authorityService.findAllRoleAuth();
         
         if(roleAuthList != null){
             setAuth:for(RoleAuth roleAuth : roleAuthList){
@@ -109,8 +113,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private String searchBase;
     @Value("${ldap.searchFilter}")
     private String searchFilter;
-    @Resource
-    private AuthenticationProvider authenticationProvider;
+    @Resource(name="usernamePasswordAuthenticationProvider")
+    private AuthenticationProvider usernamePasswordAuthenticationProvider;
     @Resource
     private DataSource dataSource;
 
@@ -129,7 +133,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //            this.log.info("SPRING SECURITY CONFIG: LDAP ENABLED");
 //        }
 //        else {
-            auth.authenticationProvider(authenticationProvider);
+            auth.authenticationProvider(usernamePasswordAuthenticationProvider);
             this.log.info("SPRING SECURITY CONFIG: LDAP DISABLED");
 //        }
     }
@@ -148,7 +152,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         if(this.ldapAuthenticationProvider != null)
             return this.ldapAuthenticationProvider;
         this.ldapAuthenticationProvider = new MyLdapAuthenticationProvider(this.ldapBindAuthenticator(), this.ldapAuthoritiesPopulator());
-        this.ldapAuthenticationProvider.setAuthService(this.authService);
+        this.ldapAuthenticationProvider.setAuthService(this.userService);
         return this.ldapAuthenticationProvider;
     }
     
@@ -171,7 +175,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         if(this.ldapAuthoritiesPopulator != null)
             return this.ldapAuthoritiesPopulator;
         this.ldapAuthoritiesPopulator = new SimpleRoleGrantingLdapAuthoritiesPopulator();
-        this.ldapAuthoritiesPopulator.setAuthService(this.authService);
+        this.ldapAuthoritiesPopulator.setAuthService(this.userService);
         return this.ldapAuthoritiesPopulator;
     }
     
