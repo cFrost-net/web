@@ -20,7 +20,6 @@
     </bean>
 
     <import resource="db_config.xml"/>
-    <!--import resource="security.xml"/-->
     
     <!--<context:component-scan base-package="net.cfrost.web" />-->
 
@@ -54,14 +53,14 @@
     
     <bean id="authorityService" class="net.cfrost.web.core.security.authentication.service.impl.AuthorityService">
         <property name="roleAuthDao" ref="roleAuthDao"/>
-    </bean>
-    
-    <bean id="usernamePasswordAuthenticationProvider" class="net.cfrost.web.core.security.authentication.provider.UsernamePasswordAuthenticationProvider">
-        <property name="userDetailsService" ref="userDetailsService"/>
-        <property name="passwordEncoder" ref="passwordEncoder"/>
-    </bean>    
+    </bean>   
     
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+    
+    <!-- <bean id="usernamePasswordAuthenticationProvider" class="net.cfrost.web.core.security.authentication.provider.UsernamePasswordAuthenticationProvider">
+        <property name="userDetailsService" ref="userDetailsService"/>
+        <property name="passwordEncoder" ref="passwordEncoder"/>
+    </bean> 
     
     <bean id="ldapAuthenticationProvider" class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
         <constructor-arg index="0" ref="ldapAuthenticator"/>
@@ -93,5 +92,7 @@
     <bean id="ldapAuthoritiesPopulator" 
         class="org.springframework.security.ldap.authentication.UserDetailsServiceLdapAuthoritiesPopulator">
         <constructor-arg ref="userDetailsService"/>
-    </bean>
+    </bean> 
+    
+    <import resource="security.xml"/>-->
 </beans>

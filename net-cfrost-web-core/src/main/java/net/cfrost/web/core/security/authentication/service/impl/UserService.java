@@ -89,6 +89,9 @@ public class UserService extends BaseService implements IUserService, UserDetail
             }
         }
         user.setAuthorities(authoritySet);
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
         
         return user;
     }
