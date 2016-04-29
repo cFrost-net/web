@@ -74,6 +74,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     
     @Override
     public void configure(HttpSecurity security) throws Exception{
+        
         List<RoleAuth> roleAuthList = this.authorityService.findAllRoleAuth();
         
         if(roleAuthList != null){
@@ -97,30 +98,30 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 this.log.info("SPRING SECURITY CONFIG: Add roles to "+roleAuth.getUrlMatcher()+" : "+roleNameList);
             }
         }
+        
         security.authorizeRequests().anyRequest().denyAll();
+        
         security.sessionManagement()
             .sessionFixation().migrateSession()
             .maximumSessions(1).maxSessionsPreventsLogin(true)
             .and().and().csrf().disable();
+        
+        security.logout()
+            .logoutUrl(SecurityConfiguration.SPRING_SECURITY_LOGOUT_URL).logoutSuccessUrl("/login?loggedOut")
+            .invalidateHttpSession(true).deleteCookies("JSESSIONID")
+            .permitAll();
+        
         if(enableCas){
             security.addFilter(this.casAuthenticationFilter())
-            .addFilterBefore(this.singleLogoutFilter(), CasAuthenticationFilter.class)
-            .addFilterBefore(this.requestSingleLogoutFilter(), LogoutFilter.class)
-            .exceptionHandling().authenticationEntryPoint(this.casEntryPoint())
-            .and().logout()
-                .logoutUrl(SecurityConfiguration.SPRING_SECURITY_LOGOUT_URL).logoutSuccessUrl("/login?loggedOut")
-                .invalidateHttpSession(true).deleteCookies("JSESSIONID")
-                .permitAll();
+                .addFilterBefore(this.singleLogoutFilter(), CasAuthenticationFilter.class)
+                .addFilterBefore(this.requestSingleLogoutFilter(), LogoutFilter.class)
+                .exceptionHandling().authenticationEntryPoint(this.casEntryPoint());
         } else {
             security.formLogin()
                 .loginPage("/login").failureUrl("/login?error")
                 .defaultSuccessUrl("/")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .permitAll()
-            .and().logout()
-                .logoutUrl(SecurityConfiguration.SPRING_SECURITY_LOGOUT_URL).logoutSuccessUrl("/login?loggedOut")
-                .invalidateHttpSession(true).deleteCookies("JSESSIONID")
                 .permitAll();
         }
     }
