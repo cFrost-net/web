@@ -138,7 +138,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             return;
         }
         if(this.enableLocalUserDatebase) {
-            auth.authenticationProvider(this.usernamePasswordAuthenticationProvider());
+            auth.userDetailsService(this.userDetailsService).passwordEncoder(this.passwordEncoder).and().eraseCredentials(true);
+            //auth.authenticationProvider(this.usernamePasswordAuthenticationProvider());
             this.log.info("SPRING SECURITY CONFIG: USE LOCAL USER DATABASE");
             return;
         }

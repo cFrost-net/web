@@ -10,6 +10,7 @@ import net.cfrost.web.core.security.authentication.entity.User;
 import net.cfrost.web.core.security.authentication.service.IUserService;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +36,14 @@ public class RootRest extends BaseRest {
     public RetResult<User> getUserAll(){
         List<User> allUsers = this.userService.findAllUsers(true);
         RetResult<User> ret = new RetResult<User>(allUsers);
+        ret.setReturnFlag(RetResult.SUCCESS);
+        return ret;
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = { "/getUser/current" }, method = RequestMethod.GET)
+    public RetResult<User> getUserCurrent(@AuthenticationPrincipal User user){
+        RetResult<User> ret = new RetResult<User>(user);
         ret.setReturnFlag(RetResult.SUCCESS);
         return ret;
     }

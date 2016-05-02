@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import net.cfrost.web.core.base.entity.BaseEntity;
 
+import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
@@ -29,7 +30,7 @@ import org.springframework.util.Assert;
 @Entity
 @XmlRootElement
 @Table(name="TS_USER")
-public class User extends BaseEntity<User> implements UserDetails {
+public class User extends BaseEntity<User> implements UserDetails, CredentialsContainer {
 
     @Column(name="USERNAME",nullable=false,unique=true)
     private String username;
@@ -163,5 +164,10 @@ public class User extends BaseEntity<User> implements UserDetails {
 
             return g1.getAuthority().compareTo(g2.getAuthority());
         }
+    }
+
+    @Override
+    public void eraseCredentials() {
+        this.password = "******";
     }
 }
