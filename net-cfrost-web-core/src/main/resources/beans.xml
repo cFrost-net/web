@@ -57,42 +57,5 @@
     
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
     
-    <!-- <bean id="usernamePasswordAuthenticationProvider" class="net.cfrost.web.core.security.authentication.provider.UsernamePasswordAuthenticationProvider">
-        <property name="userDetailsService" ref="userDetailsService"/>
-        <property name="passwordEncoder" ref="passwordEncoder"/>
-    </bean> 
-    
-    <bean id="ldapAuthenticationProvider" class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
-        <constructor-arg index="0" ref="ldapAuthenticator"/>
-        <constructor-arg index="1" ref="ldapAuthoritiesPopulator"/>
-    </bean>
-    
-    <bean id="ldapAuthenticator" class="org.springframework.security.ldap.authentication.BindAuthenticator">
-        <constructor-arg ref="ldapContextSource" />
-        <property name="userSearch" ref="ldapUserSearch" />
-    </bean>
-    
-    <bean id="ldapUserSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">
-        <constructor-arg index="0"
-            value="${ldap.searchBase}" />
-        <constructor-arg index="1"
-            value="${ldap.searchFilter}" />
-        <constructor-arg index="2"
-            ref="ldapContextSource" />
-    </bean>
-    
-    <bean id="ldapContextSource"
-        class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
-        <constructor-arg value="${ldap.url}" />
-        <property name="userDn"
-            value="${ldap.userDN}" />
-        <property name="password" value="${ldap.password}" />
-    </bean>
-    
-    <bean id="ldapAuthoritiesPopulator" 
-        class="org.springframework.security.ldap.authentication.UserDetailsServiceLdapAuthoritiesPopulator">
-        <constructor-arg ref="userDetailsService"/>
-    </bean> 
-    
-    <import resource="security.xml"/>-->
+    <!--import resource="security.xml"/>-->
 </beans>
