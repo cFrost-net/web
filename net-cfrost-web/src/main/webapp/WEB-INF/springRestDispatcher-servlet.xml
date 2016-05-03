@@ -38,8 +38,8 @@
         class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
         <property name="supportedMediaTypes">
             <list>
-                <value>application/xml;charset=UTF-8</value>
-                <value>text/xml;charset=UTF-8</value>
+                <value>application/xml</value>
+                <value>text/xml</value>
             </list>
         </property>
         <property name="marshaller" ref="jaxb2Marshaller" />
@@ -61,36 +61,22 @@
         class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
         <property name="favorPathExtension" value="true" />
         <property name="favorParameter" value="true" />
+        <property name="parameterName" value="format" />
         <property name="ignoreAcceptHeader" value="false" />
         <property name="defaultContentType" value="application/json;charset=UTF-8" />
         <property name="mediaTypes">
             <map>
-                <entry key="xml" value="application/xml;charset=UTF-8" />
+                <entry key="xml" value="application/xml" />
                 <entry key="json" value="application/json;charset=UTF-8" />
             </map>
         </property>
     </bean>
-
-    <bean id="viewResolver"
-        class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-        <property name="contentNegotiationManager" ref="contentNegotiationManager" />
-        <!-- property name="viewResolvers">
-            <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-                <property name="prefix" value="/WEB-INF/modulePages/"/>
-                <property name="suffix" value=".jsp"/>
-                <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
-            </bean>
-        </property-->
-        <property name="defaultViews">
-            <list>
-                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">                
-                    <property name="objectMapper" ref="objectMapper" />
-                    <property name="prettyPrint" value="false" />
-                </bean>
-                <bean class="org.springframework.web.servlet.view.xml.MarshallingView">
-                    <property name="marshaller"  ref="jaxb2Marshaller" />
-                </bean>
-            </list>
-        </property>
-    </bean>
+    
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager"  >
+        <mvc:message-converters>
+                <ref bean="mappingJacksonHttpMessageConverter" />
+                <ref bean="marshallingHttpMessageConverter" /> 
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    
 </beans>
