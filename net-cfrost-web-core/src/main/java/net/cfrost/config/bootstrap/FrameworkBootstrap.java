@@ -7,30 +7,19 @@ import javax.servlet.ServletRegistration;
 
 import net.cfrost.web.core.security.filter.PreLoggingFilter;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
 @Order(1)
 public class FrameworkBootstrap implements WebApplicationInitializer {
-
-
-    @Value("${enableLdap}")
-    private boolean enableLdap;
     
-    private static final Logger log = LogManager.getLogger();
     @Override
     public void onStartup(ServletContext container) throws ServletException {
-        String[] urls = {"/resources/*"};
-        container.getServletRegistration("default").addMapping(urls);
         
-//        XmlWebApplicationContext rootContext = new XmlWebApplicationContext();
-//        rootContext.setConfigLocation("classpath*:beans.xml");
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(net.cfrost.config.RootContextConfiguration.class);
         container.addListener(new ContextLoaderListener(rootContext));
@@ -52,12 +41,15 @@ public class FrameworkBootstrap implements WebApplicationInitializer {
         );
         dispatcher.setLoadOnStartup(2);
         dispatcher.addMapping("/webapi/*");
+
+        FilterRegistration.Dynamic characterEncodingFilter = container.addFilter(
+                "characterEncodingFilter", new CharacterEncodingFilter("UTF-8")
+        );
+        characterEncodingFilter.addMappingForUrlPatterns(null, false, "/*");
         
-        FilterRegistration.Dynamic registration = container.addFilter(
+        FilterRegistration.Dynamic preLoggingFilter = container.addFilter(
                 "preLoggingFilter", new PreLoggingFilter()
         );
-        registration.addMappingForUrlPatterns(null, false, "/*");
-        
-        log.info("Web Config Loaded!");
+        preLoggingFilter.addMappingForUrlPatterns(null, false, "/*");
     }
 }

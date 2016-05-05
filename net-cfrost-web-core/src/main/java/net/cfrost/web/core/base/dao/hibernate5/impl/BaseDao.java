@@ -3,11 +3,10 @@ package net.cfrost.web.core.base.dao.hibernate5.impl;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import net.cfrost.common.Generic;
 import net.cfrost.web.core.base.dao.hibernate5.IBaseDao;
 import net.cfrost.web.core.base.entity.BaseEntity;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Criteria;
@@ -19,7 +18,6 @@ public abstract class BaseDao<T extends BaseEntity<?>> implements IBaseDao<T> {
     
     protected final Logger log = LogManager.getLogger();
 
-    @Resource(name="sessionFactory")
     private SessionFactory sessionFactory;
 
     public SessionFactory getSessionFactory() {

@@ -21,9 +21,9 @@ public class LoggingBootstrap implements WebApplicationInitializer
     {
         log.info("Executing logging bootstrap.");
 
-        FilterRegistration.Dynamic registration = container.addFilter(
+        FilterRegistration.Dynamic postLoggingFilter = container.addFilter(
                 "postLoggingFilter", new PostLoggingFilter()
         );
-        registration.addMappingForUrlPatterns(null, false, "/*");
+        postLoggingFilter.addMappingForUrlPatterns(null, false, "/*");
     }
 }
