@@ -28,7 +28,7 @@ public abstract class BaseController {
         httpServletResponse.getOutputStream().write(str.getBytes("UTF-8"));
     }
 
-    @RequestMapping(value={"", "/", "index"},method=RequestMethod.GET)
+    @RequestMapping(value={"/", "index"},method=RequestMethod.GET)
     public String index(HttpServletRequest request) {
         String moduleName = this.findModuleName(request);
         String pagePath = moduleName+"/index";

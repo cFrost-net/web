@@ -20,9 +20,8 @@
     </bean>
 
     <import resource="db_config.xml"/>
-    <!--import resource="security.xml"/-->
     
-    <context:component-scan base-package="net.cfrost.web" />
+    <!--<context:component-scan base-package="net.cfrost.web" />-->
 
     <bean id="log" class="net.cfrost.web.core.util.Log">
         <property name="logService" ref="logService"/>
@@ -36,11 +35,6 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     
-    <bean id="authService" class="net.cfrost.web.core.security.authentication.service.impl.AuthService">
-        <property name="userDao" ref="userDao"/>
-        <property name="roleDao" ref="roleDao"/>
-        <property name="roleAuthDao" ref="roleAuthDao"/>
-    </bean>
     
     <bean id="userDao" class="net.cfrost.web.core.security.authentication.dao.impl.UserDao">
         <property name="sessionFactory" ref="sessionFactory"/>
@@ -50,12 +44,18 @@
     </bean>
     <bean id="roleAuthDao" class="net.cfrost.web.core.security.authentication.dao.impl.RoleAuthDao">
         <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>    
+    </bean>
     
-    <bean id="authenticationProvider" class="net.cfrost.web.core.security.authentication.provider.UsernamePasswordAuthenticationProvider">
-        <property name="userDetailsService" ref="authService"/>
+    <bean id="userService" name="userDetailsService" class="net.cfrost.web.core.security.authentication.service.impl.UserService">
+        <property name="userDao" ref="userDao"/>
         <property name="passwordEncoder" ref="passwordEncoder"/>
-    </bean>    
+    </bean>
+    
+    <bean id="authorityService" class="net.cfrost.web.core.security.authentication.service.impl.AuthorityService">
+        <property name="roleAuthDao" ref="roleAuthDao"/>
+    </bean>   
     
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+    
+    <!--import resource="security.xml"/>-->
 </beans>
