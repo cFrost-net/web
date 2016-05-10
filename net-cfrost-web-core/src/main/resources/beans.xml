@@ -12,14 +12,6 @@
            http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
            http://www.springframework.org/schema/tx 
            http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
-
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="fileEncoding" value="utf-8" />
-        <property name="ignoreUnresolvablePlaceholders" value="true" />
-        <property name="location" value="classpath:config.properties"/>
-    </bean>
-
-    <import resource="db_config.xml"/>
     
     <!--<context:component-scan base-package="net.cfrost.web" />-->
 
@@ -56,6 +48,4 @@
     </bean>   
     
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-    
-    <!--import resource="security.xml"/>-->
 </beans>

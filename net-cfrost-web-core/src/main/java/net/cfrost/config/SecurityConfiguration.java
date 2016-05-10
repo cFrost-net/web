@@ -49,6 +49,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 
 @Configuration
 @EnableWebSecurity
+//@ImportResource("classpath*:springSecurity.xml")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     
     private final static String SPRING_SECURITY_LOGOUT_URL="/logout";
