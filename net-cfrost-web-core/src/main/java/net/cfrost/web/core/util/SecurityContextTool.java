@@ -17,7 +17,11 @@ public class SecurityContextTool {
     }
     
     public static User getCurrentUser() {
-        return (User)SecurityContextTool.getAuthentication().getPrincipal();
+        try {
+            return (User)SecurityContextTool.getAuthentication().getPrincipal();
+        } catch (Exception e){
+            return null;
+        }
     }
 
 }

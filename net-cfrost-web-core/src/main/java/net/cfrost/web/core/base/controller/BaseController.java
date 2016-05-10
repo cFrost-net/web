@@ -10,6 +10,7 @@ import net.cfrost.web.core.util.UrlTool;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.ContextLoader;
@@ -29,10 +30,12 @@ public abstract class BaseController {
     }
 
     @RequestMapping(value={"/", "index"},method=RequestMethod.GET)
-    public String index(HttpServletRequest request) {
+    public String index(HttpServletRequest request, Model model) {
         String moduleName = this.findModuleName(request);
         String pagePath = moduleName+"/index";
         this.log.info("Redirect to module index page: "+pagePath);
+        //request.setAttribute("user", SecurityContextTool.getCurrentUser());
+        //model.addAttribute("user", SecurityContextTool.getCurrentUser());
         return pagePath;
     }
     
