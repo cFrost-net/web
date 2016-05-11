@@ -6,8 +6,10 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
 import net.cfrost.web.core.security.filter.PreLoggingFilter;
+import net.cfrost.web.core.util.PropertyReader;
 
 import org.springframework.core.annotation.Order;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -20,15 +22,25 @@ public class FrameworkBootstrap implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext container) throws ServletException {
         
-//        @Value("${springSecurity.ignoreUrls}")
-//        private String ignoreUrls;
-        
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(net.cfrost.config.RootContextConfiguration.class);
-//        ConfigurableEnvironment configurableEnvironment = rootContext.getEnvironment();
-//        configurableEnvironment.setActiveProfiles(arg0);
-        container.addListener(new ContextLoaderListener(rootContext));
         
+        PropertyReader propertyReader;
+        String authenticationProvider;
+        try {
+            propertyReader = new PropertyReader("config.properties");
+            authenticationProvider = (String) propertyReader.getProperty("springSecurity.authenticationProvider");
+        } catch (Exception e) {
+            rootContext.close();
+            throw new ServletException(e);
+        }        
+        
+        if(!"disable".equalsIgnoreCase(authenticationProvider)) {
+            ConfigurableEnvironment configurableEnvironment = rootContext.getEnvironment();
+            configurableEnvironment.setActiveProfiles(authenticationProvider.toLowerCase());
+        }
+        
+        container.addListener(new ContextLoaderListener(rootContext));
 
         AnnotationConfigWebApplicationContext springWebDispatcherServletContext = new AnnotationConfigWebApplicationContext();
         springWebDispatcherServletContext.register(net.cfrost.config.SpringWebDispatcherServletContextConfiguration.class);
