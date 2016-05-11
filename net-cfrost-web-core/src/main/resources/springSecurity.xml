@@ -12,18 +12,11 @@
 
     <http use-expressions="true">
 
-        <session-management
-            session-fixation-protection="migrateSession">
-            <concurrency-control max-sessions="1"
-                error-if-maximum-exceeded="true" />
-        </session-management>
-
-        <intercept-url pattern="/signup" access="permitAll" />
         <intercept-url pattern="/login" access="permitAll" />
+        <intercept-url pattern="/login/**" access="permitAll" />
         <intercept-url pattern="/logout" access="permitAll" />
-        <intercept-url pattern="/webapi/**" access="permitAll" />
-        <intercept-url pattern="/**"
-            access="hasAuthority('ROLE_ADMIN')" />
+        <intercept-url pattern="/webapi/**" access="isFullyAuthenticated()" />
+        <intercept-url pattern="/**" access="permitAll" />
         <form-login login-page="/login" login-processing-url="/login"
             authentication-failure-url="/login?error"
             default-target-url="/" username-parameter="username"
@@ -31,16 +24,19 @@
         <logout logout-url="/logout" logout-success-url="/login?loggedOut"
             invalidate-session="true" delete-cookies="JSESSIONID" />
 
+        <session-management invalid-session-url="/login"
+            session-fixation-protection="migrateSession">
+            <concurrency-control max-sessions="1"
+                error-if-maximum-exceeded="true" />
+        </session-management>
+
         <csrf disabled="true" />
 
     </http>
 
     <authentication-manager>
-        <authentication-provider>
-            <user-service>
-                <user name="admin" authorities="ROLE_ADMIN"
-                    password="admin" />
-            </user-service>
+        <authentication-provider user-service-ref="userDetailsService">
+            <password-encoder ref="passwordEncoder" />
         </authentication-provider>
     </authentication-manager>
 

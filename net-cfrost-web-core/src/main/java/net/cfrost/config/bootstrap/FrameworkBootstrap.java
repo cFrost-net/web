@@ -20,8 +20,13 @@ public class FrameworkBootstrap implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext container) throws ServletException {
         
+//        @Value("${springSecurity.ignoreUrls}")
+//        private String ignoreUrls;
+        
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(net.cfrost.config.RootContextConfiguration.class);
+//        ConfigurableEnvironment configurableEnvironment = rootContext.getEnvironment();
+//        configurableEnvironment.setActiveProfiles(arg0);
         container.addListener(new ContextLoaderListener(rootContext));
         
 
