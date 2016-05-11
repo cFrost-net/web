@@ -130,17 +130,20 @@
         </property>
     </bean>-->
 
-    <!--启动注解用注解来管理事务-->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <!--启动注解用注解来管理事务
+    <tx:annotation-driven transaction-manager="transactionManager"/>-->
 
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
-            <tx:method name="bulk*" propagation="REQUIRED" isolation="DEFAULT" />
-            <tx:method name="load*" propagation="REQUIRED" isolation="DEFAULT" read-only="true"/>
+            <tx:method propagation="REQUIRED" isolation="DEFAULT" rollback-for="Exception" name="save*" />
+            <tx:method propagation="REQUIRED" isolation="DEFAULT" rollback-for="Exception" name="create*" />
+            <tx:method propagation="REQUIRED" isolation="DEFAULT" rollback-for="Exception" name="delete*" />
+            <tx:method propagation="REQUIRED" isolation="DEFAULT" rollback-for="Exception" read-only="true" name="load*" />
+            <tx:method propagation="REQUIRED" isolation="DEFAULT" rollback-for="Exception" read-only="true" name="find*" />
         </tx:attributes>
     </tx:advice>
     <aop:config>
-            <aop:advisor pointcut="execution(* *..*Service*.*(..))" advice-ref="txAdvice" />
+            <aop:advisor pointcut="execution(* net.cfrost.web..service..*.*(..))" advice-ref="txAdvice" />
     </aop:config>
 
 </beans>

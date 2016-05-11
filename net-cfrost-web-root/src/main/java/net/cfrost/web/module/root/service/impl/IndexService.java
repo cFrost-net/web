@@ -17,7 +17,7 @@ public class IndexService extends BaseService implements IIndexService {
 
     @Override
     public DevProcess findDevProcessById(Long id) {
-        return this.devProcessDao.get(id);
+        return this.devProcessDao.load(id);
     }
 
     @Override

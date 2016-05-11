@@ -11,9 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 public class UserService extends BaseService implements IUserService, UserDetailsService {
 
     private IUserDao userDao;
@@ -42,7 +40,6 @@ public class UserService extends BaseService implements IUserService, UserDetail
     }
 
     @Override
-    @Transactional(readOnly=true)
     public User findUserByName(String username, boolean loadRoles) {        
         User user = this.userDao.findUserByName(username);
         if(user == null) return null;
@@ -54,7 +51,6 @@ public class UserService extends BaseService implements IUserService, UserDetail
     }
 
     @Override
-    @Transactional(readOnly=true)
     public List<User> findAllUsers(boolean loadRoles) {
         List<User> result = this.userDao.findAll();
         if(result != null){
@@ -69,7 +65,6 @@ public class UserService extends BaseService implements IUserService, UserDetail
     }
 
     @Override
-    @Transactional(readOnly=true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = this.userDao.findUserByName(username);
         if(user == null)

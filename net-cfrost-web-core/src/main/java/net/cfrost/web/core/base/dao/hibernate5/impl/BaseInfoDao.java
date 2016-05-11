@@ -15,8 +15,8 @@ import org.hibernate.criterion.Restrictions;
 public abstract class BaseInfoDao<T extends BaseInfoEntity<?>> extends BaseDao<T> implements IBaseInfoDao<T> {
 
     @Override
-    public T get(Serializable id) {
-        T entity = super.get(id);
+    public T load(Serializable id) {
+        T entity = super.load(id);
         if(entity.getIfDel() != 0)
             return null;
         return entity;
@@ -24,41 +24,20 @@ public abstract class BaseInfoDao<T extends BaseInfoEntity<?>> extends BaseDao<T
 
     @Override
     public Serializable save(T entity) {
-        Date date = new Date();
-        if(entity.getCreateDate() == null)
-            entity.setCreateDate(date);
-        entity.setModifyDate(date);
-        entity.setIfDel(0);
-        
+        this.setBaseInfo(entity);
         return this.getSessionFactory().getCurrentSession().save(entity);
     }
 
     @Override
     public void update(T entity) {
-
-        Date date = new Date();
-        if(entity.getCreateDate() == null)
-            entity.setCreateDate(date);
-        entity.setModifyDate(date);
-        entity.setIfDel(0);
-        
+        this.setBaseInfo(entity);
         this.getSessionFactory().getCurrentSession().update(entity);
 
     }
 
     @Override
     public Serializable saveOrUpdate(T entity) {
-        Long currentUserId = SecurityContextTool.getCurrentUser().getId();
-        Date date = new Date();
-        if(entity.getCreateDate() == null)
-            entity.setCreateDate(date);
-        if(entity.getCreateBy() == null)
-            entity.setCreateBy(currentUserId);
-        entity.setModifyDate(date);
-        if(entity.getModifyBy() == null)
-            entity.setModifyBy(currentUserId);
-        entity.setIfDel(0);
-        
+        this.setBaseInfo(entity);
         if(entity.getId() != null){
             this.update(entity);
             return entity.getId();
@@ -83,16 +62,7 @@ public abstract class BaseInfoDao<T extends BaseInfoEntity<?>> extends BaseDao<T
 
     @Override
     public List<T> findAll() {
-        return this.find("select en from "+ this.entityClass.getSimpleName() + " en where en.ifDel = 0");
-    }
-
-    @Override
-    public long findCount() {
-        List<?> l = this.find("select count(*) from "+ this.entityClass.getSimpleName() + "en where en.ifDel = 0");
-
-        if(l!=null && l.size() == 1)
-            return (Long)l.get(0);
-        return 0;
+        return this.findBy("select en from "+ this.entityClass.getSimpleName() + " en where en.ifDel = 0");
     }
 
     @SuppressWarnings("unchecked")
@@ -110,5 +80,26 @@ public abstract class BaseInfoDao<T extends BaseInfoEntity<?>> extends BaseDao<T
         criteria.setFirstResult(pageIndex);
         criteria.setMaxResults(pageSize);
         return criteria.list();
+    }
+
+    @Override
+    public long findCount() {
+        List<?> l = this.findBy("select count(*) from "+ this.entityClass.getSimpleName() + "en where en.ifDel = 0");
+
+        if(l!=null && l.size() == 1)
+            return (Long)l.get(0);
+        return 0;
+    }
+    
+    private void setBaseInfo(T entity){
+        Long currentUserId = SecurityContextTool.getCurrentUser().getId();
+        Date date = new Date();
+        if(entity.getCreateDate() == null)
+            entity.setCreateDate(date);
+        if(entity.getCreateBy() == null)
+            entity.setCreateBy(currentUserId);
+        entity.setModifyDate(date);
+        entity.setModifyBy(currentUserId);
+        entity.setIfDel(0);
     }
 }

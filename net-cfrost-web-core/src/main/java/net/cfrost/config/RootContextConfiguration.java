@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 
 @Configuration
 @ImportResource({"classpath*:beans.xml","classpath:springSecurity.xml"})
-//@Import({SecurityConfiguration.class})
+//@org.springframework.context.annotation.Import({SecurityConfiguration.class})
 @ComponentScan(
         basePackages = "net.cfrost.web",
         excludeFilters = @ComponentScan.Filter(Controller.class)

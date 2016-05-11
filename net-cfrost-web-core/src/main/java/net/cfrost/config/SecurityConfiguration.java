@@ -65,6 +65,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     
     @Value("${springSecurity.ignoreUrls}")
     private String ignoreUrls;
+    @Value("${springSecurity.authenticationProvider}")
+    private String springSecurityAuthenticationProvider;
+    private static final String LOCAL = "local";
+    private static final String LDAP = "ldap";
+    private static final String CAS = "cas";
     
     @Override
     public void configure(WebSecurity security){
@@ -88,7 +93,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 for(Authority authority : authoritySet){
                     if(Authority.ANONYMOUS.equals(authority.getAuthority())){
                         security.authorizeRequests().antMatchers(urlMatcher.getUrlMatcher()).permitAll();
-                        this.log.info("SPRING SECURITY CONFIG: Add role to "+urlMatcher.getUrlMatcher()+" PERMIT_ALL");
+                        this.log.info("SPRING SECURITY CONFIG: Add authority to "+urlMatcher.getUrlMatcher()+" PERMIT_ALL");
                         continue setAuth;
                     }                    
                     authorityNameSet.add(authority.getAuthority());
@@ -96,7 +101,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 
                 String[] roles = authorityNameSet.toArray(new String[0]);
                 security.authorizeRequests().antMatchers(urlMatcher.getUrlMatcher()).hasAnyAuthority(roles);
-                this.log.info("SPRING SECURITY CONFIG: Add roles to "+urlMatcher.getUrlMatcher()+" : "+authorityNameSet);
+                this.log.info("SPRING SECURITY CONFIG: Add authority to "+urlMatcher.getUrlMatcher()+" : "+authorityNameSet);
             }
         }
         
@@ -112,7 +117,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .invalidateHttpSession(true).deleteCookies("JSESSIONID")
             .permitAll();
         
-        if(enableCas){
+        if(CAS.equalsIgnoreCase(this.springSecurityAuthenticationProvider)){
             security.addFilter(this.casAuthenticationFilter())
                 .addFilterBefore(this.singleLogoutFilter(), CasAuthenticationFilter.class)
                 .addFilterBefore(this.requestSingleLogoutFilter(), LogoutFilter.class)
@@ -129,16 +134,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        if(this.enableCas){
+        if(CAS.equalsIgnoreCase(this.springSecurityAuthenticationProvider)){
             this.log.info("SPRING SECURITY CONFIG: USE CAS"); 
             return;
         }
-        if(this.enableLdap){
+        if(LDAP.equalsIgnoreCase(this.springSecurityAuthenticationProvider)){
             auth.authenticationProvider(this.ldapAuthenticationProvider());
             this.log.info("SPRING SECURITY CONFIG: USE LDAP");
             return;
         }
-        if(this.enableLocalUserDatebase) {
+        if(LOCAL.equalsIgnoreCase(this.springSecurityAuthenticationProvider)) {
             auth.userDetailsService(this.userDetailsService).passwordEncoder(this.passwordEncoder).and().eraseCredentials(true);
             //auth.authenticationProvider(this.usernamePasswordAuthenticationProvider());
             this.log.info("SPRING SECURITY CONFIG: USE LOCAL USER DATABASE");
@@ -148,8 +153,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
     
     //=======LOCAL_USER_DATABASE======
-    @Value("${localUserDatebase.enabled}")
-    private boolean enableLocalUserDatebase;
     private AuthenticationProvider usernamePasswordAuthenticationProvider;
     public AuthenticationProvider usernamePasswordAuthenticationProvider(){
         if(this.usernamePasswordAuthenticationProvider != null) return this.usernamePasswordAuthenticationProvider;
@@ -162,8 +165,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
     
     //=======LDAP======
-    @Value("${ldap.enabled}")
-    private boolean enableLdap;
     @Value("${ldap.url}")
     private String ldapUrl;
     @Value("${ldap.userDN}")
@@ -203,7 +204,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public BaseLdapPathContextSource ldapContextSource() {
-        if(!this.enableLdap) return null;
+        if(!LDAP.equalsIgnoreCase(this.springSecurityAuthenticationProvider)) return null;
         if(this.ldapContextSource != null) return this.ldapContextSource;
         
         DefaultSpringSecurityContextSource defaultSpringSecurityContextSource
@@ -220,8 +221,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     //=======CAS======
-    @Value("${cas.enabled}")
-    private boolean enableCas;
     @Value("${cas.localSystemUrl}")
     private String localSystemUrl;
     @Value("${cas.url}")

@@ -4,11 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import net.cfrost.web.core.base.entity.BaseEntity;
+
 import org.hibernate.criterion.DetachedCriteria;
 
 public interface IBaseDao<T extends BaseEntity<?>>{
 
-    T get(Serializable id);
+    T load(Serializable id);
     
     Serializable save(T entity);
     
@@ -22,9 +23,13 @@ public interface IBaseDao<T extends BaseEntity<?>>{
     
     List<T> findAll();
     
-    long findCount();
-    
     List<T> findBy(DetachedCriteria detachedCriteria);
     
     List<T> findPageBy(DetachedCriteria detachedCriteria, int pageIndex, int pageSize);
+    
+    List<T> findBy(String hql);
+    
+    List<T> findBy(String hql, Object... params);
+    
+    long findCount();
 }

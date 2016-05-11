@@ -7,9 +7,6 @@ import net.cfrost.web.core.security.authentication.dao.IUrlMatcherDao;
 import net.cfrost.web.core.security.authentication.entity.UrlMatcher;
 import net.cfrost.web.core.security.authentication.service.IAuthorityService;
 
-import org.springframework.transaction.annotation.Transactional;
-
-@Transactional
 public class AuthorityService extends BaseService implements IAuthorityService {
     
     private IUrlMatcherDao urlMatcherDao;

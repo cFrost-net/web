@@ -60,6 +60,6 @@ public class BlogRest extends BaseRest {
     @RequestMapping(value={"/newBlog"},method=RequestMethod.POST)
     @ResponseBody
     public Blog newBlog() {
-        return this.blogService.newBlog();
+        return this.blogService.createBlog();
     }
 }

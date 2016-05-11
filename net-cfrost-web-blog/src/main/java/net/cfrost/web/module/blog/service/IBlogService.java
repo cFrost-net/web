@@ -10,7 +10,7 @@ import net.cfrost.web.module.blog.entity.Tag;
 @PreAuthorize("isFullyAuthenticated() and hasAnyAuthority('VIEW_BLOG', 'ADMIN')")
 public interface IBlogService {
     public List<Blog> findAllBlogs();
-    public Blog newBlog();
-    public Tag newTag();
+    public Blog createBlog();
+    public Tag createTag();
     public Blog find(long id);
 }

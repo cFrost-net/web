@@ -24,8 +24,7 @@ public class BlogService extends BaseService implements IBlogService {
         this.tagDao = tagDao;
     }
     @Override
-    @Transactional
-    public Blog newBlog() {
+    public Blog createBlog() {
         Blog blog = new Blog();
         blog.setName("新ABC");
         this.blogDao.saveOrUpdate(blog);        
@@ -33,8 +32,7 @@ public class BlogService extends BaseService implements IBlogService {
     }
 
     @Override
-    @Transactional
-    public Tag newTag() {
+    public Tag createTag() {
         Tag tag = new Tag();
         this.tagDao.saveOrUpdate(tag);
         
@@ -42,7 +40,6 @@ public class BlogService extends BaseService implements IBlogService {
     }
 
     @Override
-    @Transactional
     public List<Blog> findAllBlogs() {
         this.log.warn("test warn");
         this.log.info("test info");
@@ -53,6 +50,6 @@ public class BlogService extends BaseService implements IBlogService {
     @Override
     @Transactional
     public Blog find(long id) {
-        return this.blogDao.get(id);
+        return this.blogDao.load(id);
     }
 }

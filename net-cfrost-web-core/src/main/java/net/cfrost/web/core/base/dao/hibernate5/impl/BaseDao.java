@@ -36,7 +36,7 @@ public abstract class BaseDao<T extends BaseEntity<?>> implements IBaseDao<T> {
     }
 
     @Override
-    public T get(Serializable id) {
+    public T load(Serializable id) {
         return this.getSessionFactory().getCurrentSession().get(this.entityClass, id);
     }
 
@@ -77,27 +77,20 @@ public abstract class BaseDao<T extends BaseEntity<?>> implements IBaseDao<T> {
 
     @Override
     public List<T> findAll() {
-        return this.find("select en from "+ this.entityClass.getSimpleName() + " en");
-    }
-
-    @Override
-    public long findCount() {
-        List<?> l = this.find("select count(*) from "+ this.entityClass.getSimpleName());
-
-        if(l!=null && l.size() == 1)
-            return (Long)l.get(0);
-        return 0;
+        return this.findBy("select en from "+ this.entityClass.getSimpleName() + " en");
     }
 
 
     @SuppressWarnings("unchecked")
-    protected List<T> find(String hql){
+    @Override
+    public List<T> findBy(String hql){
         return this.getSessionFactory().getCurrentSession().createQuery(hql).list();
     }
 
 
     @SuppressWarnings("unchecked")
-    protected List<T> find(String hql, Object... params){
+    @Override
+    public List<T> findBy(String hql, Object... params){
         Query query = this.getSessionFactory().getCurrentSession().createQuery(hql);
 
         for(int i = 0; i < params.length; i++){
@@ -121,5 +114,14 @@ public abstract class BaseDao<T extends BaseEntity<?>> implements IBaseDao<T> {
         criteria.setFirstResult(pageIndex);
         criteria.setMaxResults(pageSize);
         return criteria.list();
+    }
+
+    @Override
+    public long findCount() {
+        List<?> l = this.findBy("select count(*) from "+ this.entityClass.getSimpleName());
+
+        if(l!=null && l.size() == 1)
+            return (Long)l.get(0);
+        return 0;
     }
 }
