@@ -47,6 +47,7 @@ public class UserService extends BaseService implements IUserService, UserDetail
         if(user == null) return null;
         if(loadRoles) {
             user.getAuthorities().size();
+            user.eraseCredentials();
         }
         return user;
     }
@@ -57,6 +58,7 @@ public class UserService extends BaseService implements IUserService, UserDetail
         if(loadRoles && result != null){
             for(User user : result){
                 user.getAuthorities().size();
+                user.eraseCredentials();
             }
         }
         return result;
