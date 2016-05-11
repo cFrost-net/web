@@ -49,7 +49,7 @@ public class RetResult<T> {
             throw new RetResultException("RetResult has already been used as list data set");
         }
         this.data = data;
-        this.dataSize = this.dataSize==null?0:1;
+        this.dataSize = this.data==null?0:1;
         if(this.returnInfo == "UNINIT") {
             this.returnInfo = null;
         }

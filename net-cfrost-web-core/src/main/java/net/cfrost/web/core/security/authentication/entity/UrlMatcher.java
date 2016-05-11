@@ -10,12 +10,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import net.cfrost.web.core.base.entity.BaseEntity;
+import net.cfrost.web.core.base.entity.IDEntity;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name="SYS_URL_MATCHER")
-public class UrlMatcher extends BaseEntity<UrlMatcher> {
+public class UrlMatcher extends IDEntity<UrlMatcher> {
 
     @Column(name="URL_MATCHER",nullable=false,unique=true)
     private String urlMatcher;

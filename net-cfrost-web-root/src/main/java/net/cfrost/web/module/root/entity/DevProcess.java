@@ -1,9 +1,9 @@
 package net.cfrost.web.module.root.entity;
 
-import net.cfrost.web.core.base.entity.BaseInfoEntity;
+import net.cfrost.web.core.base.entity.IDTombstoneEntity;
 
 @SuppressWarnings("serial")
-public class DevProcess extends BaseInfoEntity<DevProcess> {
+public class DevProcess extends IDTombstoneEntity<DevProcess> {
 
     private String process;
 

@@ -6,12 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import net.cfrost.web.core.base.entity.BaseInfoEntity;
+import net.cfrost.web.core.base.entity.IDTombstoneEntity;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name="SYS_ACCESS_LOG")
-public class AccessLog extends BaseInfoEntity<AccessLog> {
+public class AccessLog extends IDTombstoneEntity<AccessLog> {
 
     @Column(name="CLIENT_IP")
     private String clientIp;
@@ -37,6 +37,4 @@ public class AccessLog extends BaseInfoEntity<AccessLog> {
     public void setAccessDate(Date accessDate) {
         this.accessDate = accessDate;
     }
-    
-    
 }

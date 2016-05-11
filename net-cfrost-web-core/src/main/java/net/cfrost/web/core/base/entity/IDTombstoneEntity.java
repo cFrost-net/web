@@ -5,10 +5,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @SuppressWarnings("serial")
 @MappedSuperclass
-public abstract class BaseInfoEntity<T extends BaseInfoEntity<?>> extends BaseEntity<T> implements Serializable, Comparable<T> {    
+public abstract class IDTombstoneEntity<T extends IDTombstoneEntity<?>> extends IDEntity<T> implements BaseTombstoneEntity<T> {    
 
     @Column(name="CREATE_BY")
     private Long createBy;
@@ -19,45 +21,60 @@ public abstract class BaseInfoEntity<T extends BaseInfoEntity<?>> extends BaseEn
     @Column(name="MODIFY_DATE")
     private Date modifyDate;
     @Column(name="IF_DEL")
-    private Integer ifDel;
+    private boolean ifDel;
 
+    @Override
+    @XmlElement
     public Long getCreateBy() {
         return createBy;
     }
 
-    public void setCreateBy(Long createBy) {
-        this.createBy = createBy;
+    @Override
+    public void setCreateBy(Serializable createBy) {
+        this.createBy = (Long) createBy;
     }
 
+    @Override
+    @XmlElement
     public Long getModifyBy() {
         return modifyBy;
     }
 
-    public void setModifyBy(Long modifyBy) {
-        this.modifyBy = modifyBy;
+    @Override
+    public void setModifyBy(Serializable modifyBy) {
+        this.modifyBy = (Long) modifyBy;
     }
 
+    @Override
+    @XmlElement
     public Date getCreateDate() {
         return createDate;
     }
 
+    @Override
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
+    @Override
+    @XmlElement
     public Date getModifyDate() {
         return modifyDate;
     }
 
+    @Override
     public void setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
     }
 
-    public Integer getIfDel() {
+    @Override
+    @XmlTransient
+    public boolean getIfDel() {
         return ifDel;
     }
 
-    public void setIfDel(Integer ifDel) {
+    @Override
+    public void setIfDel(boolean ifDel) {
         this.ifDel = ifDel;
     }
 }
