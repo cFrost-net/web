@@ -9,8 +9,8 @@ import java.util.Set;
 import javax.annotation.Resource;
 import javax.servlet.Filter;
 
-import net.cfrost.web.core.security.authentication.entity.Role;
-import net.cfrost.web.core.security.authentication.entity.RoleAuth;
+import net.cfrost.web.core.security.authentication.entity.Authority;
+import net.cfrost.web.core.security.authentication.entity.UrlMatcher;
 import net.cfrost.web.core.security.authentication.provider.UsernamePasswordAuthenticationProvider;
 import net.cfrost.web.core.security.authentication.service.IAuthorityService;
 
@@ -76,27 +76,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity security) throws Exception{
         
-        List<RoleAuth> roleAuthList = this.authorityService.findAllRoleAuth();
+        List<UrlMatcher> roleAuthList = this.authorityService.findUrlMatcherAuthorities();
         
         if(roleAuthList != null){
-            setAuth:for(RoleAuth roleAuth : roleAuthList){
-                if(roleAuth.getRoles() == null || roleAuth.getRoles().isEmpty()) continue;
+            setAuth:for(UrlMatcher urlMatcher : roleAuthList){
+                if(urlMatcher.getAuthorities() == null || urlMatcher.getAuthorities().isEmpty()) continue;
 
-                Set<Role> roleSet = roleAuth.getRoles();
-                Set<String> roleNameList = new HashSet<>();
+                Set<Authority> authoritySet = urlMatcher.getAuthorities();
+                Set<String> authorityNameSet = new HashSet<>();
                 
-                for(Role role : roleSet){
-                    if(Role.ANONYMOUS.equals(role.getName())){
-                        security.authorizeRequests().antMatchers(roleAuth.getUrlMatcher()).permitAll();
-                        this.log.info("SPRING SECURITY CONFIG: Add role to "+roleAuth.getUrlMatcher()+" PERMIT_ALL");
+                for(Authority authority : authoritySet){
+                    if(Authority.ANONYMOUS.equals(authority.getAuthority())){
+                        security.authorizeRequests().antMatchers(urlMatcher.getUrlMatcher()).permitAll();
+                        this.log.info("SPRING SECURITY CONFIG: Add role to "+urlMatcher.getUrlMatcher()+" PERMIT_ALL");
                         continue setAuth;
                     }                    
-                    roleNameList.add(role.getName());
+                    authorityNameSet.add(authority.getAuthority());
                 }
                 
-                String[] roles = roleNameList.toArray(new String[0]);
-                security.authorizeRequests().antMatchers(roleAuth.getUrlMatcher()).hasAnyAuthority(roles);
-                this.log.info("SPRING SECURITY CONFIG: Add roles to "+roleAuth.getUrlMatcher()+" : "+roleNameList);
+                String[] roles = authorityNameSet.toArray(new String[0]);
+                security.authorizeRequests().antMatchers(urlMatcher.getUrlMatcher()).hasAnyAuthority(roles);
+                this.log.info("SPRING SECURITY CONFIG: Add roles to "+urlMatcher.getUrlMatcher()+" : "+authorityNameSet);
             }
         }
         

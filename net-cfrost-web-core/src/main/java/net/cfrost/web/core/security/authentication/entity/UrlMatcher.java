@@ -14,16 +14,16 @@ import net.cfrost.web.core.base.entity.BaseEntity;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="TS_AUTH")
-public class RoleAuth extends BaseEntity<RoleAuth> {
+@Table(name="SYS_URL_MATCHER")
+public class UrlMatcher extends BaseEntity<UrlMatcher> {
 
     @Column(name="URL_MATCHER",nullable=false,unique=true)
     private String urlMatcher;
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="TS_AUTH_ROLE",
-        joinColumns={@JoinColumn(name="AUTH_ID")},
-        inverseJoinColumns={@JoinColumn(name="ROLE_ID")})
-    private Set<Role> roles;
+    @JoinTable(name="SYS_URL_AUTHORITY",
+        joinColumns={@JoinColumn(name="URL_MATCHER_ID")},
+        inverseJoinColumns={@JoinColumn(name="AUTHORITY_ID")})
+    private Set<Authority> authorities;
     @Column(name="AUTH_ORDER")
     private Integer order;
     
@@ -32,12 +32,12 @@ public class RoleAuth extends BaseEntity<RoleAuth> {
     }
     public void setUrlMatcher(String urlMatcher) {
         this.urlMatcher = urlMatcher;
+    }    
+    public Set<Authority> getAuthorities() {
+        return authorities;
     }
-    public Set<Role> getRoles() {
-        return roles;
-    }
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
     }
     public Integer getOrder() {
         return order;

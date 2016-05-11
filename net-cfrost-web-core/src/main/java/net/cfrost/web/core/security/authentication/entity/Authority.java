@@ -4,31 +4,33 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import net.cfrost.web.core.base.entity.BaseEntity;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="TS_ROLE")
-public class Role extends BaseEntity<Role> {
+@Table(name="SYS_AUTHORITY")
+public class Authority extends BaseEntity<Authority> implements GrantedAuthority {
    
     public final static String ANONYMOUS = "ANONYMOUS";
 
-    @Column(name="NAME",nullable=false,unique=true)
-    private String name;
+    @Column(name="AUTHORITY",nullable=false,unique=true)
+    private String authority;
     @Column(name="DESCRIPTION")
     private String description;
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
     public String getDescription() {
         return description;
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
+    @Override
+    public String getAuthority() {
+        return authority;
     }    
-    
-    
 }

@@ -10,7 +10,7 @@ import net.cfrost.web.core.base.entity.BaseInfoEntity;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="TS_ACCESS_LOG")
+@Table(name="SYS_ACCESS_LOG")
 public class AccessLog extends BaseInfoEntity<AccessLog> {
 
     @Column(name="CLIENT_IP")

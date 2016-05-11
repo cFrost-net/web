@@ -6,6 +6,10 @@
                                  http://www.springframework.org/schema/beans/spring-beans-4.2.xsd  
                                  http://www.springframework.org/schema/security  
                                  http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+	
+	<global-method-security pre-post-annotations="enabled" order="0"
+                            proxy-target-class="true">
+    </global-method-security>
 
     <!-- 配置不过滤的资源（静态资源及登录相关） -->
     <http security="none" pattern="/resources/**" />
@@ -16,7 +20,7 @@
             <intercept-url pattern="/login" access="permitAll" />
             <intercept-url pattern="/login/**" access="permitAll" />
             <intercept-url pattern="/logout" access="permitAll" />
-            <intercept-url pattern="/webapi/**" access="isFullyAuthenticated()" />
+            <!--intercept-url pattern="/webapi/**" access="isFullyAuthenticated()" /-->
             <intercept-url pattern="/**" access="permitAll" />
             <form-login login-page="/login" login-processing-url="/login"
                 authentication-failure-url="/login?error"
