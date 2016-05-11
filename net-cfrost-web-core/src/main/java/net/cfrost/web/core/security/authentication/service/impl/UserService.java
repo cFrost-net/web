@@ -42,22 +42,26 @@ public class UserService extends BaseService implements IUserService, UserDetail
     }
 
     @Override
+    @Transactional(readOnly=true)
     public User findUserByName(String username, boolean loadRoles) {        
         User user = this.userDao.findUserByName(username);
         if(user == null) return null;
         if(loadRoles) {
             user.getAuthorities().size();
-            user.eraseCredentials();
         }
+        user.eraseCredentials();
         return user;
     }
 
     @Override
+    @Transactional(readOnly=true)
     public List<User> findAllUsers(boolean loadRoles) {
         List<User> result = this.userDao.findAll();
-        if(loadRoles && result != null){
+        if(result != null){
             for(User user : result){
-                user.getAuthorities().size();
+                if(loadRoles) {
+                    user.getAuthorities().size();
+                }
                 user.eraseCredentials();
             }
         }
@@ -65,6 +69,7 @@ public class UserService extends BaseService implements IUserService, UserDetail
     }
 
     @Override
+    @Transactional(readOnly=true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = this.userDao.findUserByName(username);
         if(user == null)

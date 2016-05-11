@@ -10,6 +10,9 @@
 	<global-method-security pre-post-annotations="enabled" order="0"
                             proxy-target-class="true">
     </global-method-security>
+    
+    <beans:bean id="sessionRegistry"
+                class="org.springframework.security.core.session.SessionRegistryImpl" />
 
     <!-- 配置不过滤的资源（静态资源及登录相关） -->
     <http security="none" pattern="/resources/**" />
@@ -32,7 +35,8 @@
             <session-management invalid-session-url="/login"
                 session-fixation-protection="migrateSession">
                 <concurrency-control max-sessions="1"
-                    error-if-maximum-exceeded="true" />
+                    error-if-maximum-exceeded="true"
+                    session-registry-ref="sessionRegistry" />
             </session-management>
     
             <csrf disabled="true" />
