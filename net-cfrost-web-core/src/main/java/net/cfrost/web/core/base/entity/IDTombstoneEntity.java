@@ -1,21 +1,18 @@
 package net.cfrost.web.core.base.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 @SuppressWarnings("serial")
 @MappedSuperclass
 public abstract class IDTombstoneEntity<T extends IDTombstoneEntity<?>> extends IDEntity<T> implements BaseTombstoneEntity<T> {    
 
     @Column(name="CREATE_BY")
-    private Long createBy;
+    private String createBy;
     @Column(name="MODIFY_BY")
-    private Long modifyBy;
+    private String modifyBy;
     @Column(name="CREATE_DATE")
     private Date createDate;
     @Column(name="MODIFY_DATE")
@@ -24,29 +21,26 @@ public abstract class IDTombstoneEntity<T extends IDTombstoneEntity<?>> extends 
     private boolean ifDel;
 
     @Override
-    @XmlElement
-    public Long getCreateBy() {
+    public String getCreateBy() {
         return createBy;
     }
 
     @Override
-    public void setCreateBy(Serializable createBy) {
-        this.createBy = (Long) createBy;
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
     }
 
     @Override
-    @XmlElement
-    public Long getModifyBy() {
+    public String getModifyBy() {
         return modifyBy;
     }
 
     @Override
-    public void setModifyBy(Serializable modifyBy) {
-        this.modifyBy = (Long) modifyBy;
+    public void setModifyBy(String modifyBy) {
+        this.modifyBy = modifyBy;
     }
 
     @Override
-    @XmlElement
     public Date getCreateDate() {
         return createDate;
     }
@@ -57,7 +51,6 @@ public abstract class IDTombstoneEntity<T extends IDTombstoneEntity<?>> extends 
     }
 
     @Override
-    @XmlElement
     public Date getModifyDate() {
         return modifyDate;
     }
@@ -68,7 +61,6 @@ public abstract class IDTombstoneEntity<T extends IDTombstoneEntity<?>> extends 
     }
 
     @Override
-    @XmlTransient
     public boolean getIfDel() {
         return ifDel;
     }

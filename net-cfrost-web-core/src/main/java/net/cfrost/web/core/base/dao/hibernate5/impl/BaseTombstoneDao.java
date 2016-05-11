@@ -99,9 +99,9 @@ public abstract class BaseTombstoneDao<T extends BaseTombstoneEntity<?>> extends
         if(entity.getCreateDate() == null)
             entity.setCreateDate(date);
         if(entity.getCreateBy() == null)
-            entity.setCreateBy(currentUserId);
+            entity.setCreateBy(String.valueOf(currentUserId));
         entity.setModifyDate(date);
-        entity.setModifyBy(currentUserId);
+        entity.setModifyBy(String.valueOf(currentUserId));
         entity.setIfDel(false);
     }
 }
