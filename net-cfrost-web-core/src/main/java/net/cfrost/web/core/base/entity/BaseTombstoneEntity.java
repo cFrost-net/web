@@ -4,11 +4,11 @@ import java.util.Date;
 
 /**
  * 具有逻辑删除的功能的基础实体接口<br>
- * 可记录数据的创建人,创建时间,修改人,修改时间
- * 实现时应同时实现{@link net.cfrost.web.core.base.entity.BaseEntity}或扩展它的某种实现
+ * 可记录数据的创建人,创建时间,修改人,修改时间<br>
+ * 实现时可扩展{@link net.cfrost.web.core.base.entity.BaseEntity}的某种实现以实现某种主键策略
  * 
  * @param <T> 实现类类名&nbsp;例如:<br>
- * <code>public class Example implements BaseEntity&lt;Example&gt;, BaseTombstoneEntity&lt;Example&gt;<code>
+ * <code>public class Example implements BaseTombstoneEntity&lt;Example&gt;<code>
  * <br><strong>OR</strong><br>
  * <code>public class Example extends IDEntity&lt;Example&gt; implements BaseTombstoneEntity&lt;Example&gt;<code>
  * @author cFrost
