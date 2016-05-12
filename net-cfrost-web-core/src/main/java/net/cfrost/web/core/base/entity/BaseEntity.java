@@ -7,7 +7,9 @@ import java.io.Serializable;
  * @author cFrost
  *
  * @param <T>
- * @see net.cfrost.web.core.base.entity.IDEntity
+ * @see com.sfa.web.core.base.entity.NonIDEntity
+ * @see com.sfa.web.core.base.entity.IDEntity
+ * @see com.sfa.web.core.base.entity.UUIDEntity
  */
 public interface BaseEntity<T extends BaseEntity<?>> extends Serializable, Comparable<T> {
     

@@ -5,12 +5,12 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
 import net.cfrost.web.core.base.dao.hibernate5.IBaseTombstoneDao;
 import net.cfrost.web.core.base.entity.BaseTombstoneEntity;
 import net.cfrost.web.core.util.SecurityContextTool;
-
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
 
 public abstract class BaseTombstoneDao<T extends BaseTombstoneEntity<?>> extends BaseDao<T> implements IBaseTombstoneDao<T> {
 
@@ -62,6 +62,16 @@ public abstract class BaseTombstoneDao<T extends BaseTombstoneEntity<?>> extends
     public void delete(Serializable id) {
         T entity = this.load(id);
         this.delete(entity);
+    }
+    
+    @Override
+    public void deletePhysical(T entity) {
+        super.delete(entity);
+    }
+
+    @Override
+    public void deletePhysical(Serializable id) {
+        super.delete(id);
     }
 
     @Override

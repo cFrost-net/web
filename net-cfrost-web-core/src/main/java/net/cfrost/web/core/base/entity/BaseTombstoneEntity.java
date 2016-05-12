@@ -5,7 +5,9 @@ import java.util.Date;
 /**
  * 
  * @author cFrost
- * @see net.cfrost.web.core.base.entity.IDTombstoneEntity
+ * @see com.sfa.web.core.base.entity.NonIDTombstoneEntity
+ * @see com.sfa.web.core.base.entity.IDTombstoneEntity
+ * @see com.sfa.web.core.base.entity.UUIDTombstoneEntity
  * @param <T>
  */
 public interface BaseTombstoneEntity<T extends BaseTombstoneEntity<?>> extends BaseEntity<T> {    
