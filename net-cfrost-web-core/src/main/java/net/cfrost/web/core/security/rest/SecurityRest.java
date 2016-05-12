@@ -1,4 +1,4 @@
-package net.cfrost.web.module.root.rest;
+package net.cfrost.web.core.security.rest;
 
 import java.util.List;
 
@@ -6,7 +6,10 @@ import javax.annotation.Resource;
 
 import net.cfrost.web.core.base.entity.RetResult;
 import net.cfrost.web.core.base.rest.BaseRest;
+import net.cfrost.web.core.security.authentication.entity.Authority;
+import net.cfrost.web.core.security.authentication.entity.UrlMatcher;
 import net.cfrost.web.core.security.authentication.entity.User;
+import net.cfrost.web.core.security.authentication.service.IAuthorityService;
 import net.cfrost.web.core.security.authentication.service.IUserService;
 
 import org.springframework.context.annotation.Scope;
@@ -19,16 +22,30 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @Scope("prototype")
-@RequestMapping("/")
-public class RootRest extends BaseRest {
+@RequestMapping("/security")
+public class SecurityRest extends BaseRest {
     
     @Resource
-    private IUserService userService;    
+    private IUserService userService;
+    @Resource
+    private IAuthorityService authorityService;
     
+    @ResponseBody
     @RequestMapping(value = { "/createUser" }, method = RequestMethod.POST)
-    public String createUser(@ModelAttribute( "user" ) User user){
+    public void createUser(@ModelAttribute( "user" ) User user){
         this.userService.createUser(user.getUsername(), user.getPassword());
-        return "/root/login";
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = { "/createAuthority" }, method = RequestMethod.POST)
+    public void createAuthority(@ModelAttribute( "authority" ) Authority authority){
+        this.authorityService.createAuthority(authority.getAuthority(), authority.getDescription());
+    }
+
+    @ResponseBody
+    @RequestMapping(value = { "/createUrlMatcher" }, method = RequestMethod.POST)
+    public void createUrlMatcher(@ModelAttribute( "urlMatcher" ) UrlMatcher urlMatcher){
+        this.authorityService.createUrlMatcher(urlMatcher.getUrlMatcher(), urlMatcher.getOrder());
     }
     
     @ResponseBody

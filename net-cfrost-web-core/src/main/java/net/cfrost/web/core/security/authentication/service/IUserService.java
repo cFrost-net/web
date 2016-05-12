@@ -9,7 +9,7 @@ public interface IUserService extends IBaseService {
     
     public User findUserByName(String username, boolean loadRoles);
 
-    public Long createUser(String username, String password);
+    public void createUser(String username, String password);
 
     public List<User> findAllUsers(boolean loadRoles);
 }

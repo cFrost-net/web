@@ -6,12 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import net.cfrost.web.core.base.entity.IDTombstoneEntity;
+import net.cfrost.web.core.base.entity.UUIDEntity;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name="SYS_ACCESS_LOG")
-public class AccessLog extends IDTombstoneEntity<AccessLog> {
+public class AccessLog extends UUIDEntity<AccessLog> {
 
     @Column(name="CLIENT_IP")
     private String clientIp;

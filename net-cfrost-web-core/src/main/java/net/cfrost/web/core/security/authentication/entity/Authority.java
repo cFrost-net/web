@@ -6,12 +6,12 @@ import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import net.cfrost.web.core.base.entity.IDEntity;
+import net.cfrost.web.core.base.entity.UUIDEntity;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name="SYS_AUTHORITY")
-public class Authority extends IDEntity<Authority> implements GrantedAuthority {
+public class Authority extends UUIDEntity<Authority> implements GrantedAuthority {
    
     public final static String ANONYMOUS = "ANONYMOUS";
 

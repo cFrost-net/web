@@ -11,7 +11,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import net.cfrost.web.core.base.entity.IDEntity;
+import net.cfrost.web.core.base.entity.UUIDEntity;
 
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @XmlRootElement
 @Table(name="SYS_USER")
-public class User extends IDEntity<User> implements UserDetails, CredentialsContainer {
+public class User extends UUIDEntity<User> implements UserDetails, CredentialsContainer {
 
     @Column(name="USERNAME",nullable=false,unique=true)
     private String username;

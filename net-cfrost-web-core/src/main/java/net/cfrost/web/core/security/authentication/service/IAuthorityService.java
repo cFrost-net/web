@@ -8,4 +8,8 @@ import net.cfrost.web.core.security.authentication.entity.UrlMatcher;
 public interface IAuthorityService extends IBaseService {
 
     public List<UrlMatcher> findUrlMatcherAuthorities();
+
+    public void createAuthority(String authority, String description);
+
+    public void createUrlMatcher(String urlMatcher, int order);
 }

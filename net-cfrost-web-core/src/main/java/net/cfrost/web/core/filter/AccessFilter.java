@@ -1,4 +1,4 @@
-package net.cfrost.web.core.security.filter;
+package net.cfrost.web.core.filter;
 
 import java.io.IOException;
 import java.util.Date;

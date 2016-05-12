@@ -57,7 +57,7 @@ public class BlogRest extends BaseRest {
         return mav;
     }
     
-    @RequestMapping(value={"/newBlog"},method=RequestMethod.POST)
+    @RequestMapping(value={"/createBlog"},method=RequestMethod.POST)
     @ResponseBody
     public Blog newBlog() {
         return this.blogService.createBlog();

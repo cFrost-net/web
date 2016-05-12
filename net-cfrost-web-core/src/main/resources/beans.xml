@@ -45,6 +45,7 @@
     
     <bean id="authorityService" class="net.cfrost.web.core.security.authentication.service.impl.AuthorityService">
         <property name="urlMatcherDao" ref="urlMatcherDao"/>
+        <property name="authorityDao" ref="authorityDao"/>
     </bean>   
     
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />

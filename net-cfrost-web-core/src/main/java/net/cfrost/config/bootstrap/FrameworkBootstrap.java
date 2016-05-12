@@ -5,7 +5,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
-import net.cfrost.web.core.security.filter.PreLoggingFilter;
+import net.cfrost.web.core.filter.PreLoggingFilter;
 import net.cfrost.web.core.util.PropertyReader;
 
 import org.springframework.core.annotation.Order;

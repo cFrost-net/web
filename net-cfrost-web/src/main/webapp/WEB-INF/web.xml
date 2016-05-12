@@ -37,7 +37,7 @@
     <!-- ACCESS FILTER
     <filter>
         <filter-name>accessFilter</filter-name>
-        <filter-class>net.cfrost.web.core.security.filter.AccessFilter</filter-class>
+        <filter-class>net.cfrost.web.core.filter.AccessFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>accessFilter</filter-name>
@@ -47,7 +47,7 @@
     <!-- PRE LOGGING FILTER 
     <filter>
         <filter-name>preLoggingFilter</filter-name>
-        <filter-class>net.cfrost.web.core.security.filter.PreLoggingFilter</filter-class>
+        <filter-class>net.cfrost.web.core.filter.PreLoggingFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>preLoggingFilter</filter-name>
@@ -67,7 +67,7 @@
     <!-- POST LOGGING FILTER 
     <filter>
         <filter-name>postLoggingFilter</filter-name>
-        <filter-class>net.cfrost.web.core.security.filter.PostLoggingFilter</filter-class>
+        <filter-class>net.cfrost.web.core.filter.PostLoggingFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>postLoggingFilter</filter-name>

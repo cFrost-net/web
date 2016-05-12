@@ -1,6 +1,6 @@
 package net.cfrost.config.bootstrap;
 
-import net.cfrost.web.core.security.filter.PostLoggingFilter;
+import net.cfrost.web.core.filter.PostLoggingFilter;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

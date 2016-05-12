@@ -27,7 +27,7 @@ public class UserService extends BaseService implements IUserService, UserDetail
     }
 
     @Override
-    public Long createUser(String username, String password) {
+    public void createUser(String username, String password) {
         User user = new User();
         user.setUsername(username);
         user.setPassword(this.passwordEncoder.encode(password));
@@ -35,7 +35,7 @@ public class UserService extends BaseService implements IUserService, UserDetail
         user.setAccountNonExpired(true);
         user.setAccountNonLocked(true);
         user.setCredentialsNonExpired(true);
-        return (Long)this.userDao.save(user);
+        this.userDao.save(user);
         
     }
 
