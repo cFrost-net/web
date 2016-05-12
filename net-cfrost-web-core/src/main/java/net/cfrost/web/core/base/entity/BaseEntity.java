@@ -3,13 +3,15 @@ package net.cfrost.web.core.base.entity;
 import java.io.Serializable;
 
 /**
+ * 简单实体接口<br>
+ * 实现类应覆盖<code>Serializable getId();<code>以实现主键<br>
+ * 主键可采用任何实现{@link java.io.Serializable}接口的类,包括复合主键组件类
  * 
+ * @param <T> 实现类类名<br>例如:<code>public class Example implements BaseEntity&lt;Example&gt;<code>
  * @author cFrost
- *
- * @param <T>
- * @see com.sfa.web.core.base.entity.NonIDEntity
- * @see com.sfa.web.core.base.entity.IDEntity
- * @see com.sfa.web.core.base.entity.UUIDEntity
+ * @see net.cfrost.web.core.base.entity.NonIDEntity
+ * @see net.cfrost.web.core.base.entity.IDEntity
+ * @see net.cfrost.web.core.base.entity.UUIDEntity
  */
 public interface BaseEntity<T extends BaseEntity<?>> extends Serializable, Comparable<T> {
     
