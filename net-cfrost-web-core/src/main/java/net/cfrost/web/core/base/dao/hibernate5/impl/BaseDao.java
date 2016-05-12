@@ -14,6 +14,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Example;
 
 public abstract class BaseDao<T extends BaseEntity<?>> implements IBaseDao<T> {
     
@@ -51,6 +52,22 @@ public abstract class BaseDao<T extends BaseEntity<?>> implements IBaseDao<T> {
         this.getSessionFactory().getCurrentSession().update(entity);
 
     }
+    
+    protected void update(String hql) {
+        this.getSessionFactory().getCurrentSession()
+            .createQuery(hql)
+            .executeUpdate();
+    }
+    
+    protected void update(String hql, Object... params) {
+        Query query = this.getSessionFactory().getCurrentSession().createQuery(hql);
+
+        for(int i = 0; i < params.length; i++){
+            query.setParameter(i, params[i]);
+        }
+
+        query.executeUpdate();
+    }
 
     @Override
     public void saveOrUpdate(T entity) {
@@ -78,21 +95,26 @@ public abstract class BaseDao<T extends BaseEntity<?>> implements IBaseDao<T> {
     }
 
     @Override
+    public List<T> findBy(T entity) {        
+        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(this.entityClass);
+        detachedCriteria.add(Example.create(entity));
+        return this.findBy(detachedCriteria);
+    }
+
+    @Override
     public List<T> findAll() {
         return this.findBy("select en from "+ this.entityClass.getSimpleName() + " en");
     }
 
 
     @SuppressWarnings("unchecked")
-    @Override
-    public List<T> findBy(String hql){
+    protected List<T> findBy(String hql){
         return this.getSessionFactory().getCurrentSession().createQuery(hql).list();
     }
 
 
     @SuppressWarnings("unchecked")
-    @Override
-    public List<T> findBy(String hql, Object... params){
+    protected List<T> findBy(String hql, Object... params){
         Query query = this.getSessionFactory().getCurrentSession().createQuery(hql);
 
         for(int i = 0; i < params.length; i++){
@@ -104,14 +126,12 @@ public abstract class BaseDao<T extends BaseEntity<?>> implements IBaseDao<T> {
 
 
     @SuppressWarnings("unchecked")
-    @Override
-    public List<T> findBy(DetachedCriteria detachedCriteria) {
+    protected List<T> findBy(DetachedCriteria detachedCriteria) {
         return detachedCriteria.getExecutableCriteria(this.getSessionFactory().getCurrentSession()).list();
     }
 
     @SuppressWarnings("unchecked")
-    @Override
-    public List<T> findPageBy(DetachedCriteria detachedCriteria, int pageIndex, int pageSize) {
+    protected List<T> findPageBy(DetachedCriteria detachedCriteria, int pageIndex, int pageSize) {
         Criteria criteria = detachedCriteria.getExecutableCriteria(this.getSessionFactory().getCurrentSession());
         criteria.setFirstResult(pageIndex);
         criteria.setMaxResults(pageSize);

@@ -75,18 +75,22 @@ public abstract class BaseTombstoneDao<T extends BaseTombstoneEntity<?>> extends
     }
 
     @Override
+    public List<T> findBy(T entity) {        
+        entity.setIfDel(false);
+        return super.findBy(entity);
+    }
+
+    @Override
     public List<T> findAll() {
         return super.findBy("select en from "+ this.entityClass.getSimpleName() + " en where en.ifDel = false");
     }
 
-    @Override
-    public List<T> findBy(DetachedCriteria detachedCriteria) {
+    protected List<T> findBy(DetachedCriteria detachedCriteria) {
         detachedCriteria.add(Restrictions.eq("ifDel", false));
         return super.findBy(detachedCriteria);
     }
 
-    @Override
-    public List<T> findPageBy(DetachedCriteria detachedCriteria, int pageIndex, int pageSize) {
+    protected List<T> findPageBy(DetachedCriteria detachedCriteria, int pageIndex, int pageSize) {
         detachedCriteria.add(Restrictions.eq("ifDel", false));
         return super.findPageBy(detachedCriteria, pageIndex, pageSize);
     }
