@@ -1,6 +1,7 @@
 package net.cfrost.web.core.base.dao.hibernate5.impl;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -8,7 +9,6 @@ import net.cfrost.web.core.base.dao.hibernate5.IBaseTombstoneDao;
 import net.cfrost.web.core.base.entity.BaseTombstoneEntity;
 import net.cfrost.web.core.util.SecurityContextTool;
 
-import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
@@ -27,66 +27,63 @@ public abstract class BaseTombstoneDao<T extends BaseTombstoneEntity<?>> extends
     @Override
     public Serializable save(T entity) {
         this.setBaseInfo(entity);
-        return this.getSessionFactory().getCurrentSession().save(entity);
+        return super.save(entity);
     }
 
     @Override
     public void update(T entity) {
         this.setBaseInfo(entity);
-        this.getSessionFactory().getCurrentSession().update(entity);
+        super.update(entity);
 
     }
 
     @Override
-    public Serializable saveOrUpdate(T entity) {
+    public void saveOrUpdate(T entity) {
         this.setBaseInfo(entity);
-        if(entity.getId() != null){
-            this.update(entity);
-            return entity.getId();
-        } else {
-            return this.save(entity);
+        super.saveOrUpdate(entity);
+    }
+    
+    @Override
+    public void saveOrUpdate(Collection<T> entities){
+        for(T entity : entities){
+            this.setBaseInfo(entity);
         }
+        super.saveOrUpdate(entities);
     }
 
     @Override
     public void delete(T entity) {
-        Serializable id = entity.getId();
-        this.delete(id);
+        this.setBaseInfo(entity);
+        entity.setIfDel(true);
+        this.update(entity);
     }
 
     @Override
     public void delete(Serializable id) {
-        this.getSessionFactory().getCurrentSession()
-            .createQuery("update "+ this.entityClass.getSimpleName() + " en set en.ifDel = true where en.id = ?0")
-            .setParameter(0, id)
-            .executeUpdate();
+        T entity = this.load(id);
+        this.delete(entity);
     }
 
     @Override
     public List<T> findAll() {
-        return this.findBy("select en from "+ this.entityClass.getSimpleName() + " en where en.ifDel = false");
+        return super.findBy("select en from "+ this.entityClass.getSimpleName() + " en where en.ifDel = false");
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<T> findBy(DetachedCriteria detachedCriteria) {
         detachedCriteria.add(Restrictions.eq("ifDel", false));
-        return detachedCriteria.getExecutableCriteria(this.getSessionFactory().getCurrentSession()).list();
+        return super.findBy(detachedCriteria);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<T> findPageBy(DetachedCriteria detachedCriteria, int pageIndex, int pageSize) {
         detachedCriteria.add(Restrictions.eq("ifDel", false));
-        Criteria criteria = detachedCriteria.getExecutableCriteria(this.getSessionFactory().getCurrentSession());
-        criteria.setFirstResult(pageIndex);
-        criteria.setMaxResults(pageSize);
-        return criteria.list();
+        return super.findPageBy(detachedCriteria, pageIndex, pageSize);
     }
 
     @Override
     public long findCount() {
-        List<?> l = this.findBy("select count(*) from "+ this.entityClass.getSimpleName() + "en where en.ifDel = 0");
+        List<?> l = super.findBy("select count(*) from "+ this.entityClass.getSimpleName() + "en where en.ifDel = 0");
 
         if(l!=null && l.size() == 1)
             return (Long)l.get(0);

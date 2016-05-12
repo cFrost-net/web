@@ -1,6 +1,7 @@
 package net.cfrost.web.core.base.dao.hibernate5.impl;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import net.cfrost.common.Generic;
@@ -52,13 +53,14 @@ public abstract class BaseDao<T extends BaseEntity<?>> implements IBaseDao<T> {
     }
 
     @Override
-    public Serializable saveOrUpdate(T entity) {
-        
-        if(entity.getId() != null){
-            this.update(entity);
-            return entity.getId();
-        } else {
-            return this.save(entity);
+    public void saveOrUpdate(T entity) {
+        this.getSessionFactory().getCurrentSession().saveOrUpdate(entity);
+    }
+    
+    @Override
+    public void saveOrUpdate(Collection<T> entities){
+        for(T entity : entities){
+            this.saveOrUpdate(entity);
         }
     }
 

@@ -1,6 +1,7 @@
 package net.cfrost.web.core.base.dao.hibernate5;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import net.cfrost.web.core.base.entity.BaseEntity;
@@ -15,7 +16,9 @@ public interface IBaseDao<T extends BaseEntity<?>>{
     
     void update(T entity);
     
-    Serializable saveOrUpdate(T entity);
+    void saveOrUpdate(T entity);
+    
+    void saveOrUpdate(Collection<T> entities);
     
     void delete(T entity);
     

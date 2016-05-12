@@ -1,11 +1,10 @@
 package net.cfrost.web.core.base.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
-
-import net.cfrost.web.core.base.exception.RetResultException;
 
 @XmlRootElement
 public class RetResult<T> {
@@ -24,13 +23,11 @@ public class RetResult<T> {
         this.setData(data);
     }
 
-    public RetResult(List<T> dataList) {
-        this.setDataList(dataList);
+    public RetResult(List<T> data) {
+        this.setData(data);
     }
-
-    private T data;
     
-    private List<T> dataList;
+    private List<T> data;
     
     private Integer dataSize;
     
@@ -40,34 +37,22 @@ public class RetResult<T> {
     
     private Date returnDate;
     
-    public T getData() {
-        return data;
-    }
-    
     public void setData(T data) {
-        if(this.dataList != null){
-            throw new RetResultException("RetResult has already been used as list data set");
-        }
+        List<T> dataList = new ArrayList<>();
+        dataList.add(data);
+        this.setData(dataList);
+    }
+    
+    public void setData(List<T> data) {
         this.data = data;
-        this.dataSize = this.data==null?0:1;
+        this.dataSize = this.data==null?0:this.data.size();
         if(this.returnInfo == "UNINIT") {
             this.returnInfo = null;
         }
     }
     
-    public List<T> getDataList() {
-        return dataList;
-    }
-    
-    public void setDataList(List<T> dataList) {
-        if(this.data != null){
-            throw new RetResultException("RetResult has already been used as single data set");
-        }
-        this.dataList = dataList;
-        this.dataSize = this.dataList==null?0:this.dataList.size();
-        if(this.returnInfo == "UNINIT") {
-            this.returnInfo = null;
-        }
+    public List<T> getData() {
+        return data;
     }
     
     public Integer getReturnFlag() {

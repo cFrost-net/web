@@ -27,7 +27,7 @@ public class BlogRest extends BaseRest {
     @RequestMapping(value = "/loadBlog/all", method = RequestMethod.GET)
     public RetResult<Blog> findAllBlogs() {
         RetResult<Blog> ret = new RetResult<Blog>();
-        ret.setDataList(this.blogService.findAllBlogs());
+        ret.setData(this.blogService.findAllBlogs());
         ret.setReturnFlag(RetResult.SUCCESS);
         return ret;
     }
