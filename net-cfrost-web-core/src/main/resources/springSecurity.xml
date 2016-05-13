@@ -96,12 +96,12 @@
     
     <beans:beans profile="cas">
         <http use-expressions="true" auto-config="false" entry-point-ref="casEntryPoint" servlet-api-provision="true">
-            <intercept-url pattern="/j_spring_security_cas_check" access="permitAll" />
+            <intercept-url pattern="${cas.localSystemLoginUrl}" access="permitAll" />
             <intercept-url pattern="/login" access="permitAll" />
             <intercept-url pattern="/login/**" access="permitAll" />
             <intercept-url pattern="/logout" access="permitAll" />
-            <intercept-url pattern="/webapi/**" access="isFullyAuthenticated()" />
-            <intercept-url pattern="/**" access="permitAll" />
+            <intercept-url pattern="/webapi/**" access="permitAll" />
+            <intercept-url pattern="/**" access="isFullyAuthenticated()" />
             <custom-filter position="FORM_LOGIN_FILTER" ref="casFilter" />
             <custom-filter ref="singleLogoutFilter" before="CAS_FILTER" />
             <custom-filter ref="requestSingleLogoutFilter" before="LOGOUT_FILTER" />
@@ -127,7 +127,7 @@
         <beans:bean id="serviceProperties"
             class="org.springframework.security.cas.ServiceProperties">
             <beans:property name="service"
-                value="${cas.localSystemUrl}/j_spring_security_cas_check" />
+                value="${cas.localSystemUrl}${cas.localSystemLoginUrl}" />
             <beans:property name="sendRenew" value="false" />
         </beans:bean>
     
@@ -155,7 +155,7 @@
         <beans:bean id="casFilter"
             class="org.springframework.security.cas.web.CasAuthenticationFilter">
             <beans:property name="authenticationManager" ref="authenticationManager" />
-            <beans:property name="filterProcessesUrl" value="/j_spring_security_cas_check" />
+            <beans:property name="filterProcessesUrl" value="${cas.localSystemLoginUrl}" />
         </beans:bean>
     
         <beans:bean id="singleLogoutFilter"
