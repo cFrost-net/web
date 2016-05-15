@@ -7,7 +7,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
-import net.cfrost.web.core.base.controller.BaseController;
+import net.eulerform.web.core.base.controller.BaseController;
 import net.cfrost.web.module.blog.entity.Blog;
 import net.cfrost.web.module.blog.service.IBlogService;
 

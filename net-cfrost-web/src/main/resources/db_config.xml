@@ -96,6 +96,7 @@
         <property name="packagesToScan">
             <array>
                 <value>net.cfrost.web.**.entity</value>
+                <value>net.eulerform.web.**.entity</value>
             </array>
         </property>
         <!-- <property name="configLocations">
@@ -143,7 +144,7 @@
         </tx:attributes>
     </tx:advice>
     <aop:config>
-            <aop:advisor pointcut="execution(* net.cfrost.web..service..*.*(..))" advice-ref="txAdvice" />
+            <aop:advisor pointcut="execution(* net.eulerform.web..service..*.*(..)) or execution(* net.cfrost.web..service..*.*(..))" advice-ref="txAdvice" />
     </aop:config>
 
 </beans>

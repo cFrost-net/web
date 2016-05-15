@@ -2,8 +2,8 @@ package net.cfrost.web.module.blog.rest;
 
 import javax.annotation.Resource;
 
-import net.cfrost.web.core.base.entity.RetResult;
-import net.cfrost.web.core.base.rest.BaseRest;
+import net.eulerform.web.core.base.entity.RetResult;
+import net.eulerform.web.core.base.rest.BaseRest;
 import net.cfrost.web.module.blog.entity.Blog;
 import net.cfrost.web.module.blog.service.IBlogService;
 

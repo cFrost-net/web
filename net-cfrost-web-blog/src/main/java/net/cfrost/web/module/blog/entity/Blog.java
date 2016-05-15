@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import net.cfrost.web.core.base.entity.IDTombstoneEntity;
+import net.eulerform.web.core.base.entity.IDTombstoneEntity;
 
 @SuppressWarnings("serial")
 @Entity

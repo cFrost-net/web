@@ -1,6 +1,6 @@
 package net.cfrost.web.module.root.controller;
 
-import net.cfrost.web.core.base.controller.BaseController;
+import net.eulerform.web.core.base.controller.BaseController;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;

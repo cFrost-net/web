@@ -2,7 +2,7 @@ package net.cfrost.web.module.blog.service.impl;
 
 import java.util.List;
 
-import net.cfrost.web.core.base.service.impl.BaseService;
+import net.eulerform.web.core.base.service.impl.BaseService;
 import net.cfrost.web.module.blog.dao.IBlogDao;
 import net.cfrost.web.module.blog.dao.ITagDao;
 import net.cfrost.web.module.blog.entity.Blog;
