@@ -1,4 +1,4 @@
-package net.eulerform.config;
+package net.cfrost.config;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package net.eulerform.config.bootstrap;
+package net.cfrost.config.bootstrap;
 
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
@@ -23,7 +23,7 @@ public class FrameworkBootstrap implements WebApplicationInitializer {
     public void onStartup(ServletContext container) throws ServletException {
         
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-        rootContext.register(net.eulerform.config.RootContextConfiguration.class);
+        rootContext.register(net.cfrost.config.RootContextConfiguration.class);
         
         PropertyReader propertyReader;
         String authenticationProvider;
@@ -43,14 +43,14 @@ public class FrameworkBootstrap implements WebApplicationInitializer {
         container.addListener(new ContextLoaderListener(rootContext));
 
         AnnotationConfigWebApplicationContext springWebDispatcherServletContext = new AnnotationConfigWebApplicationContext();
-        springWebDispatcherServletContext.register(net.eulerform.config.SpringWebDispatcherServletContextConfiguration.class);
+        springWebDispatcherServletContext.register(net.cfrost.config.SpringWebDispatcherServletContextConfiguration.class);
         DispatcherServlet springWebDispatcher = new DispatcherServlet(springWebDispatcherServletContext);
         ServletRegistration.Dynamic dispatcher = container.addServlet("springWebDispatcher", springWebDispatcher);
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
         
         AnnotationConfigWebApplicationContext springRestDispatcherServletContext = new AnnotationConfigWebApplicationContext();
-        springRestDispatcherServletContext.register(net.eulerform.config.SpringRestDispatcherServletContextConfiguration.class);
+        springRestDispatcherServletContext.register(net.cfrost.config.SpringRestDispatcherServletContextConfiguration.class);
         DispatcherServlet springRestDispatcher = new DispatcherServlet(springRestDispatcherServletContext);
         springRestDispatcher.setDispatchOptionsRequest(true);
         dispatcher = container.addServlet(

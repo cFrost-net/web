@@ -1,4 +1,4 @@
-package net.eulerform.config;
+package net.cfrost.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

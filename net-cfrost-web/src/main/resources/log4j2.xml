@@ -21,5 +21,6 @@
             <appender-ref ref="Console" />
         </root>
         <logger name="net.cfrost" level="info"/>
+        <logger name="net.eulerform" level="info"/>
     </loggers>
 </configuration>
