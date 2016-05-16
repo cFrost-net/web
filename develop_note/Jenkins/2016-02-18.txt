@@ -14,4 +14,4 @@ stderr: error: unknown option `local'
 # cd git-2.7.1
 # make prefix=/usr/local/git all
 # make prefix=/usr/local/git install
-# ln -s /usr/bin/git /usr/local/git/bin/git
+# ln -s /usr/local/git/bin/git /usr/bin/git

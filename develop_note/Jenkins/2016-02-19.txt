@@ -21,7 +21,7 @@ Time:2016-02-19
 OR
 # echo "export PATH=$PATH:/usr/local/git/bin" >> /etc/bashrc
 # source /etc/bashrc
-#此处的选择会影响后面Jenkins的Git配置，用前者无需配置，用后者Jenkins无法识别git，许在Jenkins系统管理中填写绝对路径
+#此处的选择会影响后面Jenkins的Git配置，用前者无需配置，用后者Jenkins无法识别git，需在Jenkins系统管理中填写绝对路径
 
 3.安装JENKINS
 # wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo

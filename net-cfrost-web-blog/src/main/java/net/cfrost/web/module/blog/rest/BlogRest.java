@@ -2,8 +2,8 @@ package net.cfrost.web.module.blog.rest;
 
 import javax.annotation.Resource;
 
-import net.cfrost.web.core.base.entity.RetResult;
-import net.cfrost.web.core.base.rest.BaseRest;
+import net.eulerform.web.core.base.entity.RetResult;
+import net.eulerform.web.core.base.rest.BaseRest;
 import net.cfrost.web.module.blog.entity.Blog;
 import net.cfrost.web.module.blog.service.IBlogService;
 
@@ -27,7 +27,7 @@ public class BlogRest extends BaseRest {
     @RequestMapping(value = "/loadBlog/all", method = RequestMethod.GET)
     public RetResult<Blog> findAllBlogs() {
         RetResult<Blog> ret = new RetResult<Blog>();
-        ret.setDataList(this.blogService.findAllBlogs());
+        ret.setData(this.blogService.findAllBlogs());
         ret.setReturnFlag(RetResult.SUCCESS);
         return ret;
     }
@@ -57,9 +57,9 @@ public class BlogRest extends BaseRest {
         return mav;
     }
     
-    @RequestMapping(value={"/newBlog"},method=RequestMethod.POST)
+    @RequestMapping(value={"/createBlog"},method=RequestMethod.POST)
     @ResponseBody
     public Blog newBlog() {
-        return this.blogService.newBlog();
+        return this.blogService.createBlog();
     }
 }

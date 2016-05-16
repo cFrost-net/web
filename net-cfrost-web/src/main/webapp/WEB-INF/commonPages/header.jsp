@@ -47,7 +47,7 @@
             </div>
             <div id="userInfo">
                 <li><a href="javascript:void(0);"
-                    onclick="userInfoClicked();">cFrost</a>&nbsp;<a
+                    onclick="userInfoClicked();">${user.username}</a>&nbsp;<a
                     href="javascript:void(0);"
                     onclick="userInfoClicked();"><div id="kik"
                             class="img_triangle"></div></a>

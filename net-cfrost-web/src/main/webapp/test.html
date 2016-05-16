@@ -14,50 +14,47 @@
 <body>
 
     <h2>Hello World!</h2>
-    <form action="./blog/save" method="get">
-        <input id="name" name="name" value="张三" /><br /> <input
-            id="password" name="password" value="123456" /><br /> <input
-            type="submit" value="提交" />
-    </form>
-    <input id="url" name="url" value="./blog" />
-    <input type="button" value="test" onclick="ajax()">
-    <input type="button" value="createUser" onclick="createUser()">
-    <input type="button" value="createBlog" onclick="createBlog()">
+    <h3>Request Test</h3>
+    <input id="requestUrl">
+    <select id="requestMethod">
+      <option value ="GET">GET</option>
+      <option value ="POST">POST</option>
+    </select>
+    <select id="accpet">
+      <option value ="application/json">application/json</option>
+      <option value ="application/xml">application/xml</option>
+      <option value ="NULL">空</option>
+    </select>
+    <input type="button" value="test" onclick="ajax()"><br>
+    <h3>Create User</h3>
+    username: <input type="text" id="username">
+    password: <input type="password" id="password">
+    <input type="button" id="createUser" value="createUser" onClick="createUser()"><br>
+    <h3>Create Authority</h3>
+    authority: <input type="text" id="authority">
+    description: <input type="text" id="description">
+    <input type="button" id="createAuthority" value="createAuthority" onClick="createAuthority()"><br>
+    <h3>Create Url Matcher</h3>
+    UrlMatcher: <input type="text" id="urlMatcher">
+    Order: <input type="text" id="order">
+    <input type="button" id="createUrlMatchery" value="createUrlMatcher" onClick="createUrlMatcher()"><br>
+    <h3>Create Blog</h3>
+    name: <input type="text" id="blog_name">
+    <input type="button" id="createBlog" value="createBlog" onClick="createBlog()"><br>
     <script>
-		function ajax(){
-			var url = $('#url').val();
+        function ajax(){
+            var url = $('#requestUrl').val();
+            var method = $("#requestMethod").val();
+            var accpet = $("#accpet").val();
             console.log(url);
-			 $.ajax({
-	                type : "GET",
-	                async : true,
-	                url : url,
-	                beforeSend: function(request) {
-                        request.setRequestHeader("Accept", "application/json");
-                    },
-	                success : function(data) {
-	                    /* var date = new Date(data.createDate);
-	                    console.log(date); */
-	                },
-	                error : function() {}
-	            });
-		}
-		
-
-        function createUser(){
-        	var user = {};
-        	user.username = $('#name').val();
-            user.password = $('#password').val();
-
-            console.log(user);
              $.ajax({
-                    type : "POST",
+                    type : method,
                     async : true,
-                    url : 'webapi/createUser',
-                    dataType: 'json',
-                    data: user,
+                    url : url,
                     beforeSend: function(request) {
-                        request.setRequestHeader("Accept", "application/json");
-                        //request.setRequestHeader("Content-Type", "application/json;UTF-8");
+                        if(accpet == "NULL")
+                            return;
+                        request.setRequestHeader("Accept", accpet);
                     },
                     success : function(data) {
                         /* var date = new Date(data.createDate);
@@ -66,21 +63,67 @@
                     error : function() {}
                 });
         }
+		
+
+        function createUser(){
+        	var user = {};
+        	user.username = $('#username').val();
+            user.password = $('#password').val();
+            
+            $.ajax({
+                type : "POST",
+                async : true,
+                url : 'webapi/security/createUser',
+                dataType: 'json',
+                data: user,
+                success : function(data) {},
+                error : function() {}
+            });
+        }
+        
+        function createAuthority(){
+            var authority = {};
+            authority.authority = $('#authority').val();
+            authority.description = $('#description').val();
+            
+            $.ajax({
+                type : "POST",
+                async : true,
+                url : 'webapi/security/createAuthority',
+                dataType: 'json',
+                data: authority,
+                success : function(data) {},
+                error : function() {}
+            });
+        }
+        
+        function createUrlMatcher(){
+            var urlMatcher = {};
+            urlMatcher.urlMatcher = $('#urlMatcher').val();
+            urlMatcher.order = parseInt($('#order').val());
+            
+            $.ajax({
+                type : "POST",
+                async : true,
+                url : 'webapi/security/createUrlMatcher',
+                dataType: 'json',
+                data: urlMatcher,
+                success : function(data) {},
+                error : function() {}
+            });
+        }
+        
         function createBlog(){
+            var blog = {};
+            blog.name = $('#blog_name').val();
 
              $.ajax({
                     type : "POST",
                     async : true,
-                    url : 'webapi/blog/newBlog',
+                    url : 'webapi/blog/createBlog',
                     dataType: 'json',
-                    beforeSend: function(request) {
-                        request.setRequestHeader("Accept", "application/json");
-                        //request.setRequestHeader("Content-Type", "application/json;UTF-8");
-                    },
-                    success : function(data) {
-                        /* var date = new Date(data.createDate);
-                        console.log(date); */
-                    },
+                    data: blog,
+                    success : function(data) {},
                     error : function() {}
                 });
         }
