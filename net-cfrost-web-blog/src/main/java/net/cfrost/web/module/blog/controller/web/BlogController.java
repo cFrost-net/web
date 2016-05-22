@@ -1,4 +1,4 @@
-package net.cfrost.web.module.blog.controller;
+package net.cfrost.web.module.blog.controller.web;
 
 import java.io.IOException;
 import java.util.Date;
@@ -7,7 +7,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
-import net.eulerform.web.core.base.controller.BaseController;
+import net.eulerform.common.FileReader;
+import net.eulerform.web.core.base.controller.web.BaseController;
 import net.cfrost.web.module.blog.entity.Blog;
 import net.cfrost.web.module.blog.service.IBlogService;
 
@@ -34,7 +35,7 @@ public class BlogController extends BaseController {
     @RequestMapping(value = "/loadBlog", method = RequestMethod.GET)
     public void test(HttpServletResponse response) throws IOException {
         String webInfPath = this.getServletContext().getRealPath("/WEB-INF/");
-        String result = ReadFromFile.readFileByLines(webInfPath+"/dev-resources/json/blogs.json");
+        String result = FileReader.readFileByLines(webInfPath+"/dev-resources/json/blogs.json");
         response.setContentType("application/json;charset=UTF-8");
         this.writeString(response, result);
     }
@@ -43,7 +44,7 @@ public class BlogController extends BaseController {
     public void test(HttpServletResponse response, @PathVariable("id") long id)
             throws IOException {
         String webInfPath = this.getServletContext().getRealPath("/WEB-INF/");
-        String result = ReadFromFile.readFileByLines(webInfPath+"/dev-resources/blogs/"+id+".blog");
+        String result = FileReader.readFileByLines(webInfPath+"/dev-resources/blogs/"+id+".blog");
         response.setContentType("text/plain;charset=UTF-8");
         this.writeString(response, result);
     }

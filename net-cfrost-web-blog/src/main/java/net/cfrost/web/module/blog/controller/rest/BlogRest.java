@@ -1,11 +1,6 @@
-package net.cfrost.web.module.blog.rest;
+package net.cfrost.web.module.blog.controller.rest;
 
 import javax.annotation.Resource;
-
-import net.eulerform.web.core.base.entity.RetResult;
-import net.eulerform.web.core.base.rest.BaseRest;
-import net.cfrost.web.module.blog.entity.Blog;
-import net.cfrost.web.module.blog.service.IBlogService;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -14,6 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import net.cfrost.web.module.blog.entity.Blog;
+import net.cfrost.web.module.blog.service.IBlogService;
+import net.eulerform.web.core.base.controller.rest.BaseRest;
+import net.eulerform.web.core.base.entity.RestResponseEntity;
+import net.eulerform.web.core.base.entity.RestResponseStatus;
 
 @Controller
 @Scope("prototype")
@@ -25,19 +26,19 @@ public class BlogRest extends BaseRest {
 
     @ResponseBody
     @RequestMapping(value = "/loadBlog/all", method = RequestMethod.GET)
-    public RetResult<Blog> findAllBlogs() {
-        RetResult<Blog> ret = new RetResult<Blog>();
+    public RestResponseEntity<Blog> findAllBlogs() {
+    	RestResponseEntity<Blog> ret = new RestResponseEntity<Blog>();
         ret.setData(this.blogService.findAllBlogs());
-        ret.setReturnFlag(RetResult.SUCCESS);
+        ret.setStatus(RestResponseStatus.SUCCESS);
         return ret;
     }
 
     @ResponseBody
     @RequestMapping(value = "/loadBlog/{id}", method = RequestMethod.GET)
-    public RetResult<Blog> findBlog(@PathVariable("id") long id) {
-        RetResult<Blog> ret = new RetResult<Blog>();
+    public RestResponseEntity<Blog> findBlog(@PathVariable("id") long id) {
+    	RestResponseEntity<Blog> ret = new RestResponseEntity<Blog>();
         ret.setData(this.blogService.find(id));
-        ret.setReturnFlag(RetResult.SUCCESS);
+        ret.setStatus(RestResponseStatus.SUCCESS);
         return ret;
     }
 
