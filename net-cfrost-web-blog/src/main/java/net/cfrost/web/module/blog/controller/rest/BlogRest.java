@@ -29,7 +29,7 @@ public class BlogRest extends BaseRest {
     public RestResponseEntity<Blog> findAllBlogs() {
     	RestResponseEntity<Blog> ret = new RestResponseEntity<Blog>();
         ret.setData(this.blogService.findAllBlogs());
-        ret.setStatus(RestResponseStatus.SUCCESS);
+        ret.setStatus(RestResponseStatus.OK);
         return ret;
     }
 
@@ -38,7 +38,7 @@ public class BlogRest extends BaseRest {
     public RestResponseEntity<Blog> findBlog(@PathVariable("id") long id) {
     	RestResponseEntity<Blog> ret = new RestResponseEntity<Blog>();
         ret.setData(this.blogService.find(id));
-        ret.setStatus(RestResponseStatus.SUCCESS);
+        ret.setStatus(RestResponseStatus.OK);
         return ret;
     }
 
