@@ -1,4 +1,4 @@
-package net.cfrost.web.module.blog.controller.web;
+package net.cfrost.web.module.blog.controller;
 
 import java.io.IOException;
 import java.util.Date;
@@ -7,13 +7,13 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
-import net.eulerform.common.FileReader;
-import net.eulerform.web.core.base.controller.web.BaseController;
 import net.cfrost.web.module.blog.entity.Blog;
 import net.cfrost.web.module.blog.service.IBlogService;
+import net.eulerform.common.FileReader;
+import net.eulerform.web.core.annotation.WebController;
+import net.eulerform.web.core.base.controller.web.BaseController;
 
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,10 +24,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-@Controller
+@WebController
 @Scope("prototype")
 @RequestMapping("/blog")
-public class BlogController extends BaseController {
+public class BlogWebController extends BaseController {
     
     @Resource
     private IBlogService blogService;
