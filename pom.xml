@@ -11,10 +11,8 @@
 
     <modules>
         <module>net-cfrost-web</module>
-        <module>net-cfrost-web-core</module>
         <module>net-cfrost-web-root</module>
         <module>net-cfrost-web-blog</module>
-        <module>net-cfrost-common</module>
     </modules>
 
     <properties>
