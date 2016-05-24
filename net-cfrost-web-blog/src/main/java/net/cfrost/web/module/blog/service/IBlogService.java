@@ -13,4 +13,5 @@ public interface IBlogService {
     public Blog createBlog();
     public Tag createTag();
     public Blog find(long id);
+    public List<Blog> findBlogByName(String name);
 }

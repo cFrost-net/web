@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 @RestEndpoint
 @Scope("prototype")
@@ -42,20 +41,13 @@ public class BlogRestEndpoint extends BaseRest {
         return wsResponse;
     }
 
-    @RequestMapping(value = "/loadBlogv/all", method = RequestMethod.GET)
-    public ModelAndView findAllBlogsv() {
-        ModelAndView mav = new ModelAndView();
-        mav.addObject(this.blogService.findAllBlogs());
-        //mav.setViewName("restView");
-        return mav;
-    }
-    
-    @RequestMapping(value = "/loadBlogv/{id}", method = RequestMethod.GET)
-    public ModelAndView findBlogv(@PathVariable("id") long id) {
-        ModelAndView mav = new ModelAndView();
-        mav.addObject(this.blogService.find(id));
-        //mav.setViewName("restView");
-        return mav;
+    @ResponseBody
+    @RequestMapping(value = "/findBlogByName/{name}", method = RequestMethod.GET)
+    public WebServiceResponse<Blog> findBlogByName(@PathVariable("name") String name) {
+        WebServiceResponse<Blog> wsResponse = new WebServiceResponse<Blog>();
+        wsResponse.setData(this.blogService.findBlogByName(name));
+        wsResponse.setStatus(WebServiceResponseStatus.OK);
+        return wsResponse;
     }
     
     @RequestMapping(value={"/createBlog"},method=RequestMethod.POST)

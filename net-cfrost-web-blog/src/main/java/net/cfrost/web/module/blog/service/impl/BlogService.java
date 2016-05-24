@@ -52,4 +52,12 @@ public class BlogService extends BaseService implements IBlogService {
     public Blog find(long id) {
         return this.blogDao.load(id);
     }
+
+    @Override
+    public List<Blog> findBlogByName(String name) {
+        Blog b = new Blog();
+        b.setName(name);
+        
+        return this.blogDao.findBy(b);
+    }
 }
